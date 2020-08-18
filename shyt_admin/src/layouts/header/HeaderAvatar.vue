@@ -27,16 +27,16 @@ import {mapGetters} from 'vuex'
 import {logout} from '@/services/user'
 
 export default {
-  name: 'HeaderAvatar',
-  computed: {
-    ...mapGetters('account', ['user']),
-  },
-  methods: {
-    logout() {
-      logout()
-      this.$router.push('/login')
+    name: 'HeaderAvatar',
+    computed: {
+        ...mapGetters('account', ['user']),
+    },
+    methods: {
+        logout() {
+            logout()
+            this.$router.push('/login')
+        }
     }
-  }
 }
 </script>
 

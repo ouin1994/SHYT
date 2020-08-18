@@ -25,42 +25,42 @@
 </template>
 
 <script>
-  export default {
+export default {
     name: 'IInput',
     model: {
-      prop: 'value',
-      event: 'change.value'
+        prop: 'value',
+        event: 'change.value'
     },
     props: ['addonAfter', 'addonBefore', 'defaultValue', 'disabled', 'id', 'maxLength', 'prefix', 'size', 'suffix', 'type', 'value', 'allowClear'],
     data() {
-      return {
-        sValue: this.value || this.defaultValue || ''
-      }
+        return {
+            sValue: this.value || this.defaultValue || ''
+        }
     },
     watch: {
-      value(val) {
-        this.sValue = val
-      }
+        value(val) {
+            this.sValue = val
+        }
     },
     computed: {
-      lenSuffix() {
-        return this.maxLength && `${(this.sValue + '').length}/${this.maxLength}`
-      }
+        lenSuffix() {
+            return this.maxLength && `${(this.sValue + '').length}/${this.maxLength}`
+        }
     },
     methods: {
-      onChange(e) {
-        this.$emit('change', e)
-        this.$emit('change.value', e.target.value)
-      },
-      onInput(e) {
-        this.$emit('input', e)
-      },
-      onPressEnter(e) {
-        this.$emit('pressEnter', e)
-      },
-      onKeydown(e) {
-        this.$emit('keydown', e)
-      }
+        onChange(e) {
+            this.$emit('change', e)
+            this.$emit('change.value', e.target.value)
+        },
+        onInput(e) {
+            this.$emit('input', e)
+        },
+        onPressEnter(e) {
+            this.$emit('pressEnter', e)
+        },
+        onKeydown(e) {
+            this.$emit('keydown', e)
+        }
     }
-  }
+}
 </script>

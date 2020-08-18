@@ -22,8 +22,8 @@
 
 <script>
 export default {
-  name: 'ChartCard',
-  props: ['title', 'total', 'loading']
+    name: 'ChartCard',
+    props: ['title', 'total', 'loading']
 }
 </script>
 

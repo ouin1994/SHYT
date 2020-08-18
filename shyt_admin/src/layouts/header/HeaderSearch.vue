@@ -14,22 +14,22 @@
 
 <script>
 export default {
-  name: 'HeaderSearch',
-  data () {
-    return {
-      dataSource: ['选项一', '选项二'],
-      searchMode: false
-    }
-  },
-  methods: {
-    enterSearchMode () {
-      this.searchMode = true
-      setTimeout(() => this.$refs.input.focus(), 300)
+    name: 'HeaderSearch',
+    data () {
+        return {
+            dataSource: ['选项一', '选项二'],
+            searchMode: false
+        }
     },
-    leaveSearchMode () {
-      this.searchMode = false
+    methods: {
+        enterSearchMode () {
+            this.searchMode = true
+            setTimeout(() => this.$refs.input.focus(), 300)
+        },
+        leaveSearchMode () {
+            this.searchMode = false
+        }
     }
-  }
 }
 </script>
 

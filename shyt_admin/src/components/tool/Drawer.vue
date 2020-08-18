@@ -17,43 +17,43 @@
 
 <script>
 export default {
-  name: 'Drawer',
-  data () {
-    return {
+    name: 'Drawer',
+    data () {
+        return {
+        }
+    },
+    model: {
+        prop: 'visible',
+        event: 'change'
+    },
+    props: {
+        visible: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        placement: {
+            type: String,
+            required: false,
+            default: 'left'
+        },
+        showHandler: {
+            type: Boolean,
+            required: false,
+            default: true
+        }
+    },
+    methods: {
+        open () {
+            this.$emit('change', true)
+        },
+        close () {
+            this.$emit('change', false)
+        },
+        toggle () {
+            this.$emit('change', !this.visible)
+        }
     }
-  },
-  model: {
-    prop: 'visible',
-    event: 'change'
-  },
-  props: {
-    visible: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    placement: {
-      type: String,
-      required: false,
-      default: 'left'
-    },
-    showHandler: {
-      type: Boolean,
-      required: false,
-      default: true
-    }
-  },
-  methods: {
-    open () {
-      this.$emit('change', true)
-    },
-    close () {
-      this.$emit('change', false)
-    },
-    toggle () {
-      this.$emit('change', !this.visible)
-    }
-  }
 }
 </script>
 

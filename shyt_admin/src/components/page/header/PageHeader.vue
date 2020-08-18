@@ -29,30 +29,30 @@
 
 <script>
 export default {
-  name: 'PageHeader',
-  props: {
-    title: {
-      type: String,
-      required: false
+    name: 'PageHeader',
+    props: {
+        title: {
+            type: String,
+            required: false
+        },
+        breadcrumb: {
+            type: Array,
+            required: false
+        },
+        logo: {
+            type: String,
+            required: false
+        },
+        avatar: {
+            type: String,
+            required: false
+        },
     },
-    breadcrumb: {
-      type: Array,
-      required: false
-    },
-    logo: {
-      type: String,
-      required: false
-    },
-    avatar: {
-      type: String,
-      required: false
-    },
-  },
-  computed: {
-    layout () {
-      return this.$store.state.setting.layout
+    computed: {
+        layout () {
+            return this.$store.state.setting.layout
+        }
     }
-  }
 }
 </script>
 

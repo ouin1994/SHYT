@@ -15,31 +15,31 @@ import PageToggleTransition from '../components/transition/PageToggleTransition'
 import {mapState} from 'vuex'
 
 export default {
-  name: 'PageView',
-  components: {PageToggleTransition, PageLayout},
-  data () {
-    return {
-      page: {}
-    }
-  },
-  computed: {
-    ...mapState('setting', ['isMobile', 'multiPage', 'animate']),
-    desc() {
-      return this.page.desc
+    name: 'PageView',
+    components: {PageToggleTransition, PageLayout},
+    data () {
+        return {
+            page: {}
+        }
     },
-    linkList() {
-      return this.page.linkList
+    computed: {
+        ...mapState('setting', ['isMobile', 'multiPage', 'animate']),
+        desc() {
+            return this.page.desc
+        },
+        linkList() {
+            return this.page.linkList
+        },
+        extraImage() {
+            return this.page.extraImage
+        }
     },
-    extraImage() {
-      return this.page.extraImage
+    mounted () {
+        this.page = this.$refs.page
+    },
+    updated () {
+        this.page = this.$refs.page
     }
-  },
-  mounted () {
-    this.page = this.$refs.page
-  },
-  updated () {
-    this.page = this.$refs.page
-  }
 }
 </script>
 

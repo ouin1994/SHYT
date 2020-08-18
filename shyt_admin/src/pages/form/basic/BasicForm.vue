@@ -82,18 +82,18 @@
 
 <script>
 export default {
-  name: 'BasicForm',
-  i18n: require('./i18n'),
-  data () {
-    return {
-      value: 1
+    name: 'BasicForm',
+    i18n: require('./i18n'),
+    data () {
+        return {
+            value: 1
+        }
+    },
+    computed: {
+        desc() {
+            return this.$t('pageDesc')
+        }
     }
-  },
-  computed: {
-    desc() {
-      return this.$t('pageDesc')
-    }
-  }
 }
 </script>
 
