@@ -19,34 +19,34 @@ import Step2 from './Step2'
 import Step3 from './Step3'
 
 export default {
-  name: 'StepForm',
-  i18n: require('./i18n'),
-  components: {Step1, Step2, Step3},
-  data () {
-    return {
-      current: 0
-    }
-  },
-  computed: {
-    desc() {
-      return this.$t('pageDesc')
-    }
-  },
-  methods: {
-    nextStep () {
-      if (this.current < 2) {
-        this.current += 1
-      }
+    name: 'StepForm',
+    i18n: require('./i18n'),
+    components: {Step1, Step2, Step3},
+    data () {
+        return {
+            current: 0
+        }
     },
-    prevStep () {
-      if (this.current > 0) {
-        this.current -= 1
-      }
+    computed: {
+        desc() {
+            return this.$t('pageDesc')
+        }
     },
-    finish () {
-      this.current = 0
+    methods: {
+        nextStep () {
+            if (this.current < 2) {
+                this.current += 1
+            }
+        },
+        prevStep () {
+            if (this.current > 0) {
+                this.current -= 1
+            }
+        },
+        finish () {
+            this.current = 0
+        }
     }
-  }
 }
 </script>
 

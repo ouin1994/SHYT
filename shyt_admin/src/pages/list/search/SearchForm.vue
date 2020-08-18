@@ -70,20 +70,20 @@ import FormRow from '../../../components/form/FormRow'
 const TagSelectOption = TagSelect.Option
 
 export default {
-  name: 'SearchForm',
-  components: {FormRow, TagSelectOption, TagSelect},
-  data() {
-    return {
-      form: this.$form.createForm(this)
+    name: 'SearchForm',
+    components: {FormRow, TagSelectOption, TagSelect},
+    data() {
+        return {
+            form: this.$form.createForm(this)
+        }
+    },
+    methods: {
+        lookMyself () {
+            this.form.setFieldsValue({
+                owner: '3'
+            })
+        }
     }
-  },
-  methods: {
-    lookMyself () {
-      this.form.setFieldsValue({
-        owner: '3'
-      })
-    }
-  }
 }
 </script>
 

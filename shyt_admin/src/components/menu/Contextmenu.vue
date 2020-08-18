@@ -15,59 +15,59 @@
 
 <script>
 export default {
-  name: 'Contextmenu',
-  props: {
-    visible: {
-      type: Boolean,
-      required: false,
-      default: false
+    name: 'Contextmenu',
+    props: {
+        visible: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        itemList: {
+            type: Array,
+            required: true,
+            default: () => []
+        }
     },
-    itemList: {
-      type: Array,
-      required: true,
-      default: () => []
-    }
-  },
-  data () {
-    return {
-      left: 0,
-      top: 0,
-      target: null,
-      selectedKeys: []
-    }
-  },
-  computed: {
-    style () {
-      return {
-        left: this.left + 'px',
-        top: this.top + 'px'
-      }
-    }
-  },
-  created () {
-    const clickHandler = () => this.closeMenu()
-    const contextMenuHandler = e => this.setPosition(e)
-    window.addEventListener('click', clickHandler)
-    window.addEventListener('contextmenu', contextMenuHandler)
-    this.$emit('hook:beforeDestroy', () => {
-      window.removeEventListener('click', clickHandler)
-      window.removeEventListener('contextmenu', contextMenuHandler)
-    })
-  },
-  methods: {
-    closeMenu () {
-      this.$emit('update:visible', false)
+    data () {
+        return {
+            left: 0,
+            top: 0,
+            target: null,
+            selectedKeys: []
+        }
     },
-    setPosition (e) {
-      this.left = e.clientX
-      this.top = e.clientY
-      this.target = e.target
+    computed: {
+        style () {
+            return {
+                left: this.left + 'px',
+                top: this.top + 'px'
+            }
+        }
     },
-    handleClick ({ key }) {
-      this.$emit('select', key, this.target)
-      this.closeMenu()
+    created () {
+        const clickHandler = () => this.closeMenu()
+        const contextMenuHandler = e => this.setPosition(e)
+        window.addEventListener('click', clickHandler)
+        window.addEventListener('contextmenu', contextMenuHandler)
+        this.$emit('hook:beforeDestroy', () => {
+            window.removeEventListener('click', clickHandler)
+            window.removeEventListener('contextmenu', contextMenuHandler)
+        })
+    },
+    methods: {
+        closeMenu () {
+            this.$emit('update:visible', false)
+        },
+        setPosition (e) {
+            this.left = e.clientX
+            this.top = e.clientY
+            this.target = e.target
+        },
+        handleClick ({ key }) {
+            this.$emit('select', key, this.target)
+            this.closeMenu()
+        }
     }
-  }
 }
 </script>
 

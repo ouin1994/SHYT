@@ -16,8 +16,8 @@
 
 <script>
 export default {
-  name: 'Result',
-  props: ['isSuccess', 'title', 'description']
+    name: 'Result',
+    props: ['isSuccess', 'title', 'description']
 }
 </script>
 

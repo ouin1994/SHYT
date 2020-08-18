@@ -40,40 +40,40 @@ import IMenu from '@/components/menu/menu'
 import {mapState, mapMutations} from 'vuex'
 
 export default {
-  name: 'AdminHeader',
-  components: {IMenu, HeaderAvatar, HeaderNotice, HeaderSearch},
-  props: ['collapsed', 'menuData'],
-  data() {
-    return {
-      langList: [
-        {key: 'CN', name: '简体中文', alias: '简体'},
-        {key: 'HK', name: '繁體中文', alias: '繁體'},
-        {key: 'US', name: 'English', alias: 'English'}
-      ]
+    name: 'AdminHeader',
+    components: {IMenu, HeaderAvatar, HeaderNotice, HeaderSearch},
+    props: ['collapsed', 'menuData'],
+    data() {
+        return {
+            langList: [
+                {key: 'CN', name: '简体中文', alias: '简体'},
+                {key: 'HK', name: '繁體中文', alias: '繁體'},
+                {key: 'US', name: 'English', alias: 'English'}
+            ]
+        }
+    },
+    computed: {
+        ...mapState('setting', ['theme', 'isMobile', 'layout', 'systemName', 'lang']),
+        headerTheme () {
+            if (this.layout == 'side' && this.theme.mode == 'dark' && !this.isMobile) {
+                return 'light'
+            }
+            return this.theme.mode
+        },
+        langAlias() {
+            let lang = this.langList.find(item => item.key == this.lang)
+            return lang.alias
+        }
+    },
+    methods: {
+        toggleCollapse () {
+            this.$emit('toggleCollapse')
+        },
+        onSelect (obj) {
+            this.$emit('menuSelect', obj)
+        },
+        ...mapMutations('setting', ['setLang'])
     }
-  },
-  computed: {
-    ...mapState('setting', ['theme', 'isMobile', 'layout', 'systemName', 'lang']),
-    headerTheme () {
-      if (this.layout == 'side' && this.theme.mode == 'dark' && !this.isMobile) {
-        return 'light'
-      }
-      return this.theme.mode
-    },
-    langAlias() {
-      let lang = this.langList.find(item => item.key == this.lang)
-      return lang.alias
-    }
-  },
-  methods: {
-    toggleCollapse () {
-      this.$emit('toggleCollapse')
-    },
-    onSelect (obj) {
-      this.$emit('menuSelect', obj)
-    },
-    ...mapMutations('setting', ['setLang'])
-  }
 }
 </script>
 

@@ -11,8 +11,8 @@
 
 <script>
 export default {
-  name: 'FormRow',
-  props: ['label']
+    name: 'FormRow',
+    props: ['label']
 }
 </script>
 

@@ -6,20 +6,20 @@
 
 <script>
 export default {
-  name: 'TagSelectOption',
-  props: {
-    size: {
-      type: String,
-      required: false,
-      default: 'default'
+    name: 'TagSelectOption',
+    props: {
+        size: {
+            type: String,
+            required: false,
+            default: 'default'
+        }
+    },
+    data () {
+        return {
+            checked: false,
+            isTagSelectOption: true
+        }
     }
-  },
-  data () {
-    return {
-      checked: false,
-      isTagSelectOption: true
-    }
-  }
 }
 </script>
 

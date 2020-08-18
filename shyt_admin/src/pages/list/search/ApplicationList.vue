@@ -46,8 +46,8 @@
 <script>
 import SearchForm from './SearchForm'
 export default {
-  name: 'ApplicationList',
-  components: {SearchForm}
+    name: 'ApplicationList',
+    components: {SearchForm}
 }
 </script>
 
