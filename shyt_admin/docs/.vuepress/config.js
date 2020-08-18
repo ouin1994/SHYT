@@ -7,10 +7,10 @@ module.exports = {
   ],
   themeConfig: {
     logo: '/logo.png',
-    repo: 'iczer/vue-antd-admin',
+    // repo: 'iczer/vue-antd-admin',
     docsDir: 'docs',
     editLinks: true,
-    editLinkText: '在 Github 上帮助我们编辑此页',
+    // editLinkText: '在 Github 上帮助我们编辑此页',
     nav: [
       {text: '指南', link: '/'},
       {text: '配置', link: '/develop/layout'},
@@ -44,6 +44,13 @@ module.exports = {
         collapsable: false,
         children: [
           '/other/upgrade', '/other/community'
+        ]
+      },
+      {
+        title: '代码规范',
+        collapsable: false,
+        children: [
+          '/custom/eslint'
         ]
       }
     ],
