@@ -11,11 +11,13 @@ import Plugins from '@/plugins'
 import {initI18n} from '@/utils/i18n'
 import bootstrap from '@/bootstrap'
 
+
 const router = initRouter(store.state.setting.asyncRoutes)
 const i18n = initI18n('CN', 'US')
 bootstrap({router, store, i18n})
 
-Vue.config.productionTip = false
+Vue.config.devtools = true;
+// Vue.config.productionTip = false
 Vue.use(Viser)
 Vue.use(Antd)
 Vue.use(Plugins)

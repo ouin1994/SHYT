@@ -50,7 +50,10 @@ module.exports = {
         title: '代码规范',
         collapsable: false,
         children: [
-          '/custom/eslint'
+          '/custom/eslint',
+          '/custom/es6',
+          '/custom/train',
+          '/custom/standard'
         ]
       }
     ],

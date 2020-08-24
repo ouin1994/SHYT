@@ -25,6 +25,7 @@ module.exports = {
 
     },
     "rules": {
+
         "indent": [2, 4], // 强制使用一致的缩进
         "eqeqeq": [2, 'always'], // 要求使用 === 和 !==
         "no-multiple-empty-lines": ["error", {"max": 3}], // 空行最多不能超过2行
