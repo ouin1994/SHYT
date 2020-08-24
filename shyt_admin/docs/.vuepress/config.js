@@ -51,9 +51,15 @@ module.exports = {
         collapsable: false,
         children: [
           '/custom/eslint',
-          '/custom/es6',
-          '/custom/train',
-          '/custom/standard'
+          '/custom/es6'
+        ]
+      },
+      {
+        title: '培训资料',
+        collapsable: false,
+        children: [
+          '/train/vue',
+          '/train/vuex'
         ]
       }
     ],

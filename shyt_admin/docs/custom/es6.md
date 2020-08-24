@@ -21,18 +21,18 @@ let a = 10;
 const name = "小红";
 ```
 1. 不存在变量提升
-    - var 命令会发生变量提升现象，即变量可以在声明之前使用，值为undefined。   
-    - let 和 const 则没有变量声明提升的功能，必须要先声明才能使用
+    * var 命令会发生变量提升现象，即变量可以在声明之前使用，值为undefined。   
+    * let 和 const 则没有变量声明提升的功能，必须要先声明才能使用
 2. 不允许重复声明
-    - var命令能重复声明，后者覆盖前者
-    - let 和 const不允许在相同作用域内，重复声明同一个变量
+    * var命令能重复声明，后者覆盖前者
+    * let 和 const不允许在相同作用域内，重复声明同一个变量
 3. 作用域
-    - var 的作用域是以函数为界限
-    - let 和 const 的作用域是块作用域，块级作用域指 { } 内的范围
-    - var 可以定义全局变量和局部变量，let 和 const 只能定义局部变量
-    - const 的声明的常量不能被修改，但对于引用类型来说，堆内存中的值是可以被改变的。
+    * var 的作用域是以函数为界限
+    * let 和 const 的作用域是块作用域，块级作用域指 { } 内的范围
+    * var 可以定义全局变量和局部变量，let 和 const 只能定义局部变量
+    * const 的声明的常量不能被修改，但对于引用类型来说，堆内存中的值是可以被改变的。
 4. 变量作为全局属性
-    - 定义的变量会作为window对象的属性，let不会
+    * 定义的变量会作为window对象的属性，let不会
 
 ## 解构赋值
 解构赋值语法是一种 Javascript 表达式。通过解构赋值, 可以将属性/值从对象/数组中取出,赋值给其他变量。[具体可见](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
@@ -126,13 +126,13 @@ const fn = v => ({a:1,b:2})
 ```
 this的指向问题
 1. 普通函数中this
-    - 总是代表着它的直接调用者，如obj.fn，fn里的最外层this就是指向obj
-    - 默认情况下，没有直接调用者，this指向window
-    - 严格模式下（设置了'use strict'），this为undefined
-    - 当使用call，apply，bind（ES5新增）绑定的，this指向绑定对象
+    * 总是代表着它的直接调用者，如obj.fn，fn里的最外层this就是指向obj
+    * 默认情况下，没有直接调用者，this指向window
+    * 严格模式下（设置了'use strict'），this为undefined
+    * 当使用call，apply，bind（ES5新增）绑定的，this指向绑定对象
 2. ES6箭头函数中this
-    - 默认指向定义它时，所处上下文的对象的this指向。即ES6箭头函数里this的指向就是上下文里对象this指向，偶尔没有上下文对象，this就指向window
-    - 即使是call，apply，bind等方法也不能改变箭头函数this的指向
+    * 默认指向定义它时，所处上下文的对象的this指向。即ES6箭头函数里this的指向就是上下文里对象this指向，偶尔没有上下文对象，this就指向window
+    * 即使是call，apply，bind等方法也不能改变箭头函数this的指向
 ```js
 let a = 2;
 let obj = {
@@ -194,23 +194,23 @@ new Promise(
   (err) => {console.log(err)} // 失败
 )
 ```
-- resolve作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
-- reject作用是，将Promise对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
-- promise有三个状态：
+* resolve作用是，将Promise对象的状态从“未完成”变为“成功”（即从 pending 变为 resolved），在异步操作成功时调用，并将异步操作的结果，作为参数传递出去；
+* reject作用是，将Promise对象的状态从“未完成”变为“失败”（即从 pending 变为 rejected），在异步操作失败时调用，并将异步操作报出的错误，作为参数传递出去。
+* promise有三个状态：
     + pending[待定]初始状态
     + fulfilled[实现]操作成功
     + rejected[被否决]操作失败
-- 当promise状态发生改变，就会触发then()里的响应函数处理后续步骤；
+* 当promise状态发生改变，就会触发then()里的响应函数处理后续步骤；
     + promise状态一经改变，不会再变。
     + Promise对象的状态改变，只有两种可能：
     + 从pending变为fulfilled,从pending变为rejected。这两种情况只要发生，状态就凝固了，不会再变了。
 
 #### promise的API
 1. promise.all()
-    - Promise.all([p1, p2, p3])用于将多个promise实例，包装成一个新的Promise实例，返回的实例就是普通的promise,它接收一个数组作为参数。
-    - 数组里可以是Promise对象，也可以是别的值，只有Promise会等待状态改变
-    - 当所有的子Promise都完成，该Promise完成，返回值是全部值得数组
-    - 有任何一个失败，该Promise失败，返回值是第一个失败的子Promise结果
+    * Promise.all([p1, p2, p3])用于将多个promise实例，包装成一个新的Promise实例，返回的实例就是普通的promise,它接收一个数组作为参数。
+    * 数组里可以是Promise对象，也可以是别的值，只有Promise会等待状态改变
+    * 当所有的子Promise都完成，该Promise完成，返回值是全部值得数组
+    * 有任何一个失败，该Promise失败，返回值是第一个失败的子Promise结果
 ```js
 //切菜
     function cutUp(){
@@ -243,7 +243,7 @@ new Promise(
         })
 ```
 2. promise.race()
-    - Promise.race() 类似于Promise.all() ，区别在于它有任意一个完成就算完成。
+    * Promise.race() 类似于Promise.all() ，区别在于它有任意一个完成就算完成。
 ```js
 let p1 = new Promise(resolve => {
         setTimeout(() => {
