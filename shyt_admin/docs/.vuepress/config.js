@@ -59,7 +59,8 @@ module.exports = {
           collapsable: false,
           children: [
             '/train/vue',
-            '/train/vuex'
+            '/train/vuex',
+            '/train/vue_router'
           ]
         }
       ],
