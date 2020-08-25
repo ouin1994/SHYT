@@ -82,3 +82,6 @@ lang: zh-CN
 推荐：
 
 ![注释规范](../assets/code-9.png)
+
+## vue规范
+**详细vue规范参照[官方文档](https://cn.vuejs.org/v2/style-guide/)**

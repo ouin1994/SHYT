@@ -15,7 +15,13 @@ module.exports = {
         {text: '指南', link: '/'},
         {text: '配置', link: '/develop/layout'},
         {text: '主题', link: '/advance/theme'},
-        {text: '官方手册', link: 'https://pro.antdv.com/'},
+        {
+            text: '官方手册', 
+            items: [
+                { text: 'vue', link: 'https://cn.vuejs.org/' },
+                { text: 'antdv-admin', link: 'https://pro.antdv.com/' },
+              ]
+        },
       ],
       lastUpdated: 'Last Updated',
       sidebar: [
