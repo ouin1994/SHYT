@@ -62,6 +62,7 @@ module.exports = {
           children: [
             '/train/vue',
             '/train/vuex',
+            '/train/vue_router',
             '/train/axios'
           ]
         }
