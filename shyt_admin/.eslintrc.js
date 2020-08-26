@@ -7,7 +7,8 @@ module.exports = {
     },
     "extends": [
         "plugin:vue/essential",
-        "eslint:recommended"
+        "eslint:recommended",
+        "standard"
     ],
     "plugins": [
         "html"
@@ -28,15 +29,16 @@ module.exports = {
 
         "indent": [2, 4], // 强制使用一致的缩进
         "eqeqeq": [2, 'always'], // 要求使用 === 和 !==
-        "no-multiple-empty-lines": ["error", {"max": 3}], // 空行最多不能超过2行
+        "no-multiple-empty-lines": ["error", {"max": 2}], // 空行最多不能超过2行
         "spaced-comment": 0,  //注释风格要不要有空格什么的
-        "no-trailing-spaces": 0, // 禁止行尾空格
+        "no-trailing-spaces": 1, // 禁止行尾空格
         "no-callback-literal": 0,
         // allow paren-less arrow functions
         "arrow-parens": 0,
         // allow async-await
         "generator-star-spacing": 0,
         // allow debugger during development
-        "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0
+        "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0,
+        "no-var":2,
     }
 }
