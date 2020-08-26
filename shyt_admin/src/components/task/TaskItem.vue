@@ -6,8 +6,8 @@
 
 <script>
 export default {
-    name: 'TaskItem',
-    props: ['content']
+  name: 'TaskItem',
+  props: ['content']
 }
 </script>
 

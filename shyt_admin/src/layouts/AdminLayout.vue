@@ -31,48 +31,48 @@ import PageFooter from './footer/PageFooter'
 import Drawer from '../components/tool/Drawer'
 import SideMenu from '../components/menu/SideMenu'
 import Setting from '../components/setting/Setting'
-import {mapState, mapMutations} from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 
 const minHeight = window.innerHeight - 64 - 24 - 122
 
 export default {
-    name: 'AdminLayout',
-    components: {Setting, SideMenu, Drawer, PageFooter, AdminHeader},
-    data () {
-        return {
-            minHeight: minHeight,
-            collapsed: false,
-            showSetting: false
-        }
-    },
-    computed: {
-        ...mapState('setting', ['isMobile', 'theme', 'layout', 'footerLinks', 'copyright', 'fixedHeader', 'fixedSideBar',
-            'hideSetting', 'menuData']),
-        sideMenuWidth() {
-            return this.collapsed ? '80px' : '256px'
-        },
-        headerStyle() {
-            let width = (this.fixedHeader && this.layout == 'side' && !this.isMobile) ? `calc(100% - ${this.sideMenuWidth})` : '100%'
-            let position = this.fixedHeader ? 'fixed' : 'static'
-            let transition = this.fixedHeader ? 'transition: width 0.2s' : ''
-            return `width: ${width}; position: ${position}; ${transition}`
-        }
-    },
-    methods: {
-        ...mapMutations('setting', ['correctPageMinHeight']),
-        toggleCollapse () {
-            this.collapsed = !this.collapsed
-        },
-        onMenuSelect () {
-            this.toggleCollapse()
-        },
-    },
-    created() {
-        this.correctPageMinHeight(minHeight - 1)
-    },
-    beforeDestroy() {
-        this.correctPageMinHeight(-minHeight + 1)
+  name: 'AdminLayout',
+  components: { Setting, SideMenu, Drawer, PageFooter, AdminHeader },
+  data () {
+    return {
+      minHeight: minHeight,
+      collapsed: false,
+      showSetting: false
     }
+  },
+  computed: {
+    ...mapState('setting', ['isMobile', 'theme', 'layout', 'footerLinks', 'copyright', 'fixedHeader', 'fixedSideBar',
+      'hideSetting', 'menuData']),
+    sideMenuWidth () {
+      return this.collapsed ? '80px' : '256px'
+    },
+    headerStyle () {
+      const width = (this.fixedHeader && this.layout == 'side' && !this.isMobile) ? `calc(100% - ${this.sideMenuWidth})` : '100%'
+      const position = this.fixedHeader ? 'fixed' : 'static'
+      const transition = this.fixedHeader ? 'transition: width 0.2s' : ''
+      return `width: ${width}; position: ${position}; ${transition}`
+    }
+  },
+  methods: {
+    ...mapMutations('setting', ['correctPageMinHeight']),
+    toggleCollapse () {
+      this.collapsed = !this.collapsed
+    },
+    onMenuSelect () {
+      this.toggleCollapse()
+    }
+  },
+  created () {
+    this.correctPageMinHeight(minHeight - 1)
+  },
+  beforeDestroy () {
+    this.correctPageMinHeight(-minHeight + 1)
+  }
 }
 </script>
 

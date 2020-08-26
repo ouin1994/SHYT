@@ -7,8 +7,8 @@
 
 <script>
 export default {
-    name: 'SettingItem',
-    props: ['title']
+  name: 'SettingItem',
+  props: ['title']
 }
 </script>
 

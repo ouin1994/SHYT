@@ -5,15 +5,15 @@
 </template>
 
 <script>
-import PageToggleTransition from '../components/transition/PageToggleTransition';
-import {mapState} from 'vuex'
+import PageToggleTransition from '../components/transition/PageToggleTransition'
+import { mapState } from 'vuex'
 
 export default {
-    name: 'BlankView',
-    components: {PageToggleTransition},
-    computed: {
-        ...mapState('setting', ['multiPage', 'animate'])
-    }
+  name: 'BlankView',
+  components: { PageToggleTransition },
+  computed: {
+    ...mapState('setting', ['multiPage', 'animate'])
+  }
 }
 </script>
 

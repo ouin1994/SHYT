@@ -7,7 +7,8 @@ module.exports = {
     },
     "extends": [
         "plugin:vue/essential",
-        "eslint:recommended"
+        "eslint:recommended",
+        "standard"
     ],
     "plugins": [
         "html"
@@ -38,5 +39,6 @@ module.exports = {
         "generator-star-spacing": 0,
         // allow debugger during development
         "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0
+    
     }
 }

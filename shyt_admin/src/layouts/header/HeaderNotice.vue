@@ -41,27 +41,27 @@
 
 <script>
 export default {
-    name: 'HeaderNotice',
-    data () {
-        return {
-            loading: false,
-            show: false
-        }
-    },
-    computed: {
-    },
-    methods: {
-        fetchNotice () {
-            if (this.loading) {
-                this.loading = false
-                return
-            }
-            this.loadding = true
-            setTimeout(() => {
-                this.loadding = false
-            }, 1000)
-        }
+  name: 'HeaderNotice',
+  data () {
+    return {
+      loading: false,
+      show: false
     }
+  },
+  computed: {
+  },
+  methods: {
+    fetchNotice () {
+      if (this.loading) {
+        this.loading = false
+        return
+      }
+      this.loadding = true
+      setTimeout(() => {
+        this.loadding = false
+      }, 1000)
+    }
+  }
 }
 </script>
 

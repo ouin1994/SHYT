@@ -20,38 +20,38 @@
 
 <script>
 export default {
-    name: 'SearchLayout',
-    computed: {
-        activeKey () {
-            switch (this.$route.path) {
-            case '/list/search/article':
-                return '1'
-            case '/list/search/application':
-                return '2'
-            case '/list/search/project':
-                return '3'
-            default:
-                return '1'
-            }
-        }
-    },
-    methods: {
-        navigate (key) {
-            switch (key) {
-            case '1':
-                this.$router.push('/list/search/article')
-                break
-            case '2':
-                this.$router.push('/list/search/application')
-                break
-            case '3':
-                this.$router.push('/list/search/project')
-                break
-            default:
-                this.$router.push('/workplace')
-            }
-        }
+  name: 'SearchLayout',
+  computed: {
+    activeKey () {
+      switch (this.$route.path) {
+        case '/list/search/article':
+          return '1'
+        case '/list/search/application':
+          return '2'
+        case '/list/search/project':
+          return '3'
+        default:
+          return '1'
+      }
     }
+  },
+  methods: {
+    navigate (key) {
+      switch (key) {
+        case '1':
+          this.$router.push('/list/search/article')
+          break
+        case '2':
+          this.$router.push('/list/search/application')
+          break
+        case '3':
+          this.$router.push('/list/search/project')
+          break
+        default:
+          this.$router.push('/workplace')
+      }
+    }
+  }
 }
 </script>
 

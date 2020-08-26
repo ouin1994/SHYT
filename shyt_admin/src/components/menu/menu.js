@@ -34,182 +34,182 @@
 import Menu from 'ant-design-vue/es/menu'
 import Icon from 'ant-design-vue/es/icon'
 import fastEqual from 'fast-deep-equal'
-import {getI18nKey} from '@/utils/routerUtil'
+import { getI18nKey } from '@/utils/routerUtil'
 
-const {Item, SubMenu} = Menu
+const { Item, SubMenu } = Menu
 
 export default {
-    name: 'IMenu',
-    props: {
-        options: {
-            type: Array,
-            required: true
-        },
-        theme: {
-            type: String,
-            required: false,
-            default: 'dark'
-        },
-        mode: {
-            type: String,
-            required: false,
-            default: 'inline'
-        },
-        collapsed: {
-            type: Boolean,
-            required: false,
-            default: false
-        },
-        i18n: Object,
-        openKeys: Array
+  name: 'IMenu',
+  props: {
+    options: {
+      type: Array,
+      required: true
     },
-    data () {
-        return {
-            selectedKeys: [],
-            sOpenKeys: [],
-            cachedOpenKeys: []
-        }
+    theme: {
+      type: String,
+      required: false,
+      default: 'dark'
     },
-    computed: {
-        menuTheme() {
-            return this.theme == 'light' ? this.theme : 'dark'
-        }
+    mode: {
+      type: String,
+      required: false,
+      default: 'inline'
     },
-    created () {
-        this.updateMenu()
-        if (!this.options[0].fullPath) {
-            this.formatOptions(this.options, '')
-        }
-        // 自定义国际化配置
-        if(this.i18n && this.i18n.messages) {
-            const messages = this.i18n.messages
-            Object.keys(messages).forEach(key => {
-                this.$i18n.mergeLocaleMessage(key, messages[key])
-            })
-        }
+    collapsed: {
+      type: Boolean,
+      required: false,
+      default: false
     },
-    watch: {
-        collapsed (val) {
-            if (val) {
-                this.cachedOpenKeys = this.sOpenKeys
-                this.sOpenKeys = []
-            } else {
-                this.sOpenKeys = this.cachedOpenKeys
-            }
-        },
-        '$route': function () {
-            this.updateMenu()
-        },
-        sOpenKeys(val) {
-            this.$emit('openChange', val)
-            this.$emit('update:openKeys', val)
-        }
-    },
-    methods: {
-        renderIcon: function (h, icon) {
-            return !icon || icon == 'none' ? null : h(Icon, {props: {type:  icon}})
-        },
-        renderMenuItem: function (h, menu) {
-            return h(
-                Item, {key: menu.fullPath},
-                [
-                    h('router-link', {props: {to: menu.fullPath}},
-                        [
-                            this.renderIcon(h, menu.meta ? menu.meta.icon : 'none'),
-                            h('span', [this.$t(getI18nKey(menu.fullPath))])
-                        ]
-                    )
-                ]
-            )
-        },
-        renderSubMenu: function (h, menu) {
-            let this_ = this
-            let subItem = [h('span', {slot: 'title'},
-                [
-                    this.renderIcon(h, menu.meta ? menu.meta.icon : 'none'),
-                    h('span', [this.$t(getI18nKey(menu.fullPath))])
-                ]
-            )]
-            let itemArr = []
-            menu.children.forEach(function (item) {
-                itemArr.push(this_.renderItem(h, item))
-            })
-            return h(SubMenu, {key: menu.fullPath},
-                subItem.concat(itemArr)
-            )
-        },
-        renderItem: function (h, menu) {
-            const meta = menu.meta
-            if (!meta || !meta.invisible) {
-                let renderChildren = false
-                const children = menu.children
-                if (children != undefined) {
-                    for (let i = 0; i < children.length; i++) {
-                        const childMeta = children[i].meta
-                        if (!childMeta || !childMeta.invisible) {
-                            renderChildren = true
-                            break
-                        }
-                    }
-                }
-                return (menu.children && renderChildren) ? this.renderSubMenu(h, menu) : this.renderMenuItem(h, menu)
-            }
-        },
-        renderMenu: function (h, menuTree) {
-            let this_ = this
-            let menuArr = []
-            menuTree.forEach(function (menu, i) {
-                menuArr.push(this_.renderItem(h, menu, '0', i))
-            })
-            return menuArr
-        },
-        formatOptions(options, parentPath) {
-            options.forEach(route => {
-                let isFullPath = route.path.substring(0, 1) == '/'
-                route.fullPath = isFullPath ? route.path : parentPath + '/' + route.path
-                if (route.children) {
-                    this.formatOptions(route.children, route.fullPath)
-                }
-            })
-        },
-        updateMenu () {
-            const menuRoutes = this.$route.matched.filter(item => item.path !== '')
-            const route = menuRoutes.pop()
-            if(this.selectedKeys.length === 0 || route.meta.invisible) {
-                this.selectedKeys = [this.getSelectedKey(route)]
-            }
-            let openKeys = menuRoutes.map(item => item.path)
-            if (!fastEqual(openKeys, this.sOpenKeys)) {
-                this.collapsed || this.mode === 'horizontal' ? this.cachedOpenKeys = openKeys : this.sOpenKeys = openKeys
-            }
-        },
-        getSelectedKey (route) {
-            if (route.meta.invisible && route.parent) {
-                return this.getSelectedKey(route.parent)
-            }
-            return route.path
-        }
-    },
-    render (h) {
-        return h(
-            Menu,
-            {
-                props: {
-                    theme: this.menuTheme,
-                    mode: this.$props.mode,
-                    selectedKeys: this.selectedKeys,
-                    openKeys: this.openKeys ? this.openKeys : this.sOpenKeys
-                },
-                on: {
-                    select: (obj) => {
-                        this.selectedKeys = obj.selectedKeys
-                        this.$emit('select', obj)
-                    },
-                    'update:openKeys': (val) => {
-                        this.sOpenKeys = val
-                    }
-                }
-            }, this.renderMenu(h, this.options)
-        )
+    i18n: Object,
+    openKeys: Array
+  },
+  data () {
+    return {
+      selectedKeys: [],
+      sOpenKeys: [],
+      cachedOpenKeys: []
     }
+  },
+  computed: {
+    menuTheme () {
+      return this.theme == 'light' ? this.theme : 'dark'
+    }
+  },
+  created () {
+    this.updateMenu()
+    if (!this.options[0].fullPath) {
+      this.formatOptions(this.options, '')
+    }
+    // 自定义国际化配置
+    if (this.i18n && this.i18n.messages) {
+      const messages = this.i18n.messages
+      Object.keys(messages).forEach(key => {
+        this.$i18n.mergeLocaleMessage(key, messages[key])
+      })
+    }
+  },
+  watch: {
+    collapsed (val) {
+      if (val) {
+        this.cachedOpenKeys = this.sOpenKeys
+        this.sOpenKeys = []
+      } else {
+        this.sOpenKeys = this.cachedOpenKeys
+      }
+    },
+    $route: function () {
+      this.updateMenu()
+    },
+    sOpenKeys (val) {
+      this.$emit('openChange', val)
+      this.$emit('update:openKeys', val)
+    }
+  },
+  methods: {
+    renderIcon: function (h, icon) {
+      return !icon || icon == 'none' ? null : h(Icon, { props: { type: icon } })
+    },
+    renderMenuItem: function (h, menu) {
+      return h(
+        Item, { key: menu.fullPath },
+        [
+          h('router-link', { props: { to: menu.fullPath } },
+            [
+              this.renderIcon(h, menu.meta ? menu.meta.icon : 'none'),
+              h('span', [this.$t(getI18nKey(menu.fullPath))])
+            ]
+          )
+        ]
+      )
+    },
+    renderSubMenu: function (h, menu) {
+      const this_ = this
+      const subItem = [h('span', { slot: 'title' },
+        [
+          this.renderIcon(h, menu.meta ? menu.meta.icon : 'none'),
+          h('span', [this.$t(getI18nKey(menu.fullPath))])
+        ]
+      )]
+      const itemArr = []
+      menu.children.forEach(function (item) {
+        itemArr.push(this_.renderItem(h, item))
+      })
+      return h(SubMenu, { key: menu.fullPath },
+        subItem.concat(itemArr)
+      )
+    },
+    renderItem: function (h, menu) {
+      const meta = menu.meta
+      if (!meta || !meta.invisible) {
+        let renderChildren = false
+        const children = menu.children
+        if (children != undefined) {
+          for (let i = 0; i < children.length; i++) {
+            const childMeta = children[i].meta
+            if (!childMeta || !childMeta.invisible) {
+              renderChildren = true
+              break
+            }
+          }
+        }
+        return (menu.children && renderChildren) ? this.renderSubMenu(h, menu) : this.renderMenuItem(h, menu)
+      }
+    },
+    renderMenu: function (h, menuTree) {
+      const this_ = this
+      const menuArr = []
+      menuTree.forEach(function (menu, i) {
+        menuArr.push(this_.renderItem(h, menu, '0', i))
+      })
+      return menuArr
+    },
+    formatOptions (options, parentPath) {
+      options.forEach(route => {
+        const isFullPath = route.path.substring(0, 1) == '/'
+        route.fullPath = isFullPath ? route.path : parentPath + '/' + route.path
+        if (route.children) {
+          this.formatOptions(route.children, route.fullPath)
+        }
+      })
+    },
+    updateMenu () {
+      const menuRoutes = this.$route.matched.filter(item => item.path !== '')
+      const route = menuRoutes.pop()
+      if (this.selectedKeys.length === 0 || route.meta.invisible) {
+        this.selectedKeys = [this.getSelectedKey(route)]
+      }
+      const openKeys = menuRoutes.map(item => item.path)
+      if (!fastEqual(openKeys, this.sOpenKeys)) {
+        this.collapsed || this.mode === 'horizontal' ? this.cachedOpenKeys = openKeys : this.sOpenKeys = openKeys
+      }
+    },
+    getSelectedKey (route) {
+      if (route.meta.invisible && route.parent) {
+        return this.getSelectedKey(route.parent)
+      }
+      return route.path
+    }
+  },
+  render (h) {
+    return h(
+      Menu,
+      {
+        props: {
+          theme: this.menuTheme,
+          mode: this.$props.mode,
+          selectedKeys: this.selectedKeys,
+          openKeys: this.openKeys ? this.openKeys : this.sOpenKeys
+        },
+        on: {
+          select: (obj) => {
+            this.selectedKeys = obj.selectedKeys
+            this.$emit('select', obj)
+          },
+          'update:openKeys': (val) => {
+            this.sOpenKeys = val
+          }
+        }
+      }, this.renderMenu(h, this.options)
+    )
+  }
 }

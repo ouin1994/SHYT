@@ -17,21 +17,21 @@
 import Config from './typeConfig'
 
 export default {
-    name: 'ExceptionPage',
-    props: ['type', 'homeRoute'],
-    data () {
-        return {
-            config: Config
-        }
-    },
-    methods: {
-        backHome() {
-            if (this.homeRoute) {
-                this.$router.push(this.homeRoute)
-            }
-            this.$emit('backHome', this.type)
-        }
+  name: 'ExceptionPage',
+  props: ['type', 'homeRoute'],
+  data () {
+    return {
+      config: Config
     }
+  },
+  methods: {
+    backHome () {
+      if (this.homeRoute) {
+        this.$router.push(this.homeRoute)
+      }
+      this.$emit('backHome', this.type)
+    }
+  }
 }
 </script>
 

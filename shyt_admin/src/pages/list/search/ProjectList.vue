@@ -34,8 +34,8 @@ import AvatarList from '../../../components/tool/AvatarList'
 const AvatarListItem = AvatarList.Item
 
 export default {
-    name: 'ProjectList',
-    components: {AvatarListItem, AvatarList, SearchForm}
+  name: 'ProjectList',
+  components: { AvatarListItem, AvatarList, SearchForm }
 }
 </script>
 

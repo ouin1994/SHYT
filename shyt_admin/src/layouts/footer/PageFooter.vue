@@ -13,8 +13,8 @@
 
 <script>
 export default {
-    name: 'PageFooter',
-    props: ['copyright', 'linkList']
+  name: 'PageFooter',
+  props: ['copyright', 'linkList']
 }
 </script>
 

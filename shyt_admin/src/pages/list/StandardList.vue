@@ -63,8 +63,8 @@
 <script>
 import HeadInfo from '../../components/tool/HeadInfo'
 export default {
-    name: 'StandardList',
-    components: {HeadInfo}
+  name: 'StandardList',
+  components: { HeadInfo }
 }
 </script>
 

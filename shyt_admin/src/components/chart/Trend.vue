@@ -8,57 +8,57 @@
 
 <script>
 export default {
-    name: 'Trend',
-    props: {
-        term: {
-            type: String,
-            required: true
-        },
-        target: {
-            type: Number,
-            required: false,
-            default: 0
-        },
-        value: {
-            type: Number,
-            required: false,
-            default: 0
-        },
-        isIncrease: {
-            type: Boolean,
-            required: false,
-            default: null
-        },
-        percent: {
-            type: Number,
-            required: false,
-            default: null
-        },
-        scale: {
-            type: Number,
-            required: false,
-            default: 2
-        }
+  name: 'Trend',
+  props: {
+    term: {
+      type: String,
+      required: true
     },
-    data () {
-        return {
-            trend: this.isIncrease ? 'up' : 'down',
-            rate: this.percent
-        }
+    target: {
+      type: Number,
+      required: false,
+      default: 0
     },
-    created () {
-        this.trend = this.caulateTrend()
-        this.rate = this.caulateRate()
+    value: {
+      type: Number,
+      required: false,
+      default: 0
     },
-    methods: {
-        caulateRate () {
-            return (this.percent === null ? Math.abs(this.value - this.target) * 100 / this.target : this.percent).toFixed(this.scale)
-        },
-        caulateTrend () {
-            let isIncrease = this.isIncrease === null ? this.value >= this.target : this.isIncrease
-            return isIncrease ? 'up' : 'down'
-        }
+    isIncrease: {
+      type: Boolean,
+      required: false,
+      default: null
+    },
+    percent: {
+      type: Number,
+      required: false,
+      default: null
+    },
+    scale: {
+      type: Number,
+      required: false,
+      default: 2
     }
+  },
+  data () {
+    return {
+      trend: this.isIncrease ? 'up' : 'down',
+      rate: this.percent
+    }
+  },
+  created () {
+    this.trend = this.caulateTrend()
+    this.rate = this.caulateRate()
+  },
+  methods: {
+    caulateRate () {
+      return (this.percent === null ? Math.abs(this.value - this.target) * 100 / this.target : this.percent).toFixed(this.scale)
+    },
+    caulateTrend () {
+      const isIncrease = this.isIncrease === null ? this.value >= this.target : this.isIncrease
+      return isIncrease ? 'up' : 'down'
+    }
+  }
 }
 </script>
 

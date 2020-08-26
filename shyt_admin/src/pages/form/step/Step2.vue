@@ -48,25 +48,25 @@
 
 <script>
 export default {
-    name: 'Step2',
-    i18n: require('./i18n'),
-    data () {
-        return {
-            loading: false
-        }
-    },
-    methods: {
-        nextStep () {
-            let _this = this
-            _this.loading = true
-            setTimeout(function () {
-                _this.$emit('nextStep')
-            }, 1500)
-        },
-        prevStep () {
-            this.$emit('prevStep')
-        }
+  name: 'Step2',
+  i18n: require('./i18n'),
+  data () {
+    return {
+      loading: false
     }
+  },
+  methods: {
+    nextStep () {
+      const _this = this
+      _this.loading = true
+      setTimeout(function () {
+        _this.$emit('nextStep')
+      }, 1500)
+    },
+    prevStep () {
+      this.$emit('prevStep')
+    }
+  }
 }
 </script>
 

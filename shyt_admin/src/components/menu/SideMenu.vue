@@ -12,42 +12,42 @@
 
 <script>
 import IMenu from './menu'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 export default {
-    name: 'SideMenu',
-    components: {IMenu},
-    props: {
-        collapsible: {
-            type: Boolean,
-            required: false,
-            default: false
-        },
-        collapsed: {
-            type: Boolean,
-            required: false,
-            default: false
-        },
-        menuData: {
-            type: Array,
-            required: true
-        },
-        theme: {
-            type: String,
-            required: false,
-            default: 'dark'
-        }
+  name: 'SideMenu',
+  components: { IMenu },
+  props: {
+    collapsible: {
+      type: Boolean,
+      required: false,
+      default: false
     },
-    computed: {
-        sideTheme() {
-            return this.theme == 'light' ? this.theme : 'dark'
-        },
-        ...mapState('setting', ['isMobile', 'systemName'])
+    collapsed: {
+      type: Boolean,
+      required: false,
+      default: false
     },
-    methods: {
-        onSelect (obj) {
-            this.$emit('menuSelect', obj)
-        }
+    menuData: {
+      type: Array,
+      required: true
+    },
+    theme: {
+      type: String,
+      required: false,
+      default: 'dark'
     }
+  },
+  computed: {
+    sideTheme () {
+      return this.theme == 'light' ? this.theme : 'dark'
+    },
+    ...mapState('setting', ['isMobile', 'systemName'])
+  },
+  methods: {
+    onSelect (obj) {
+      this.$emit('menuSelect', obj)
+    }
+  }
 }
 </script>
 
