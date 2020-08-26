@@ -35,8 +35,8 @@
 <script>
 import SearchForm from './SearchForm'
 export default {
-  name: 'ArticleList',
-  components: { SearchForm }
+    name: 'ArticleList',
+    components: { SearchForm }
 }
 </script>
 

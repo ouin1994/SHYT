@@ -81,54 +81,54 @@ import { loadRoutes } from '@/utils/routerUtil'
 import { mapMutations } from 'vuex'
 
 export default {
-  name: 'Login',
-  components: { CommonLayout },
-  data () {
-    return {
-      logging: false,
-      error: '',
-      form: this.$form.createForm(this)
-    }
-  },
-  computed: {
-    systemName () {
-      return this.$store.state.setting.systemName
-    }
-  },
-  methods: {
-    ...mapMutations('account', ['setUser', 'setPermissions', 'setRoles']),
-    onSubmit (e) {
-      e.preventDefault()
-      this.form.validateFields((err) => {
-        if (!err) {
-          this.logging = true
-          const name = this.form.getFieldValue('name')
-          const password = this.form.getFieldValue('password')
-          login(name, password).then(this.afterLogin)
+    name: 'Login',
+    components: { CommonLayout },
+    data () {
+        return {
+            logging: false,
+            error: '',
+            form: this.$form.createForm(this)
         }
-      })
     },
-    afterLogin (res) {
-      this.logging = false
-      const loginRes = res.data
-      if (loginRes.code >= 0) {
-        const { user, permissions, roles } = loginRes.data
-        this.setUser(user)
-        this.setPermissions(permissions)
-        this.setRoles(roles)
-        setAuthorization({ token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt) })
-        // 获取路由配置
-        getRoutesConfig().then(result => {
-          const routesConfig = result.data.data
-          loadRoutes({ router: this.$router, store: this.$store, i18n: this.$i18n }, routesConfig)
-          this.$router.push('/dashboard/workplace')
-          this.$message.success(loginRes.message, 3)
-        })
-      } else {
-        this.error = loginRes.message
-      }
+    computed: {
+        systemName () {
+            return this.$store.state.setting.systemName
+        }
+    },
+    methods: {
+        ...mapMutations('account', ['setUser', 'setPermissions', 'setRoles']),
+        onSubmit (e) {
+            e.preventDefault()
+            this.form.validateFields((err) => {
+                if (!err) {
+                    this.logging = true
+                    const name = this.form.getFieldValue('name')
+                    const password = this.form.getFieldValue('password')
+                    login(name, password).then(this.afterLogin)
+                }
+            })
+        },
+        afterLogin (res) {
+            this.logging = false
+            const loginRes = res.data
+            if (loginRes.code >= 0) {
+                const { user, permissions, roles } = loginRes.data
+                this.setUser(user)
+                this.setPermissions(permissions)
+                this.setRoles(roles)
+                setAuthorization({ token: loginRes.data.token, expireAt: new Date(loginRes.data.expireAt) })
+                // 获取路由配置
+                getRoutesConfig().then(result => {
+                    const routesConfig = result.data.data
+                    loadRoutes({ router: this.$router, store: this.$store, i18n: this.$i18n }, routesConfig)
+                    this.$router.push('/dashboard/workplace')
+                    this.$message.success(loginRes.message, 3)
+                })
+            } else {
+                this.error = loginRes.message
+            }
+        }
     }
-  }
 }
 </script>
 

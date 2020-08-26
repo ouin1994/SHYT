@@ -19,29 +19,29 @@
 import Draggable from 'vuedraggable'
 
 const dragOptions = {
-  sort: true,
-  scroll: true,
-  scrollSpeed: 2,
-  animation: 150,
-  ghostClass: 'dragable-ghost',
-  chosenClass: 'dragable-chose',
-  dragClass: 'dragable-drag'
+    sort: true,
+    scroll: true,
+    scrollSpeed: 2,
+    animation: 150,
+    ghostClass: 'dragable-ghost',
+    chosenClass: 'dragable-chose',
+    dragClass: 'dragable-drag'
 }
 
 export default {
-  name: 'TaskGroup',
-  components: { Draggable },
-  props: ['title', 'group'],
-  data () {
-    return {
-      dragOptions: { ...dragOptions, group: this.group }
+    name: 'TaskGroup',
+    components: { Draggable },
+    props: ['title', 'group'],
+    data () {
+        return {
+            dragOptions: { ...dragOptions, group: this.group }
+        }
+    },
+    computed: {
+        count () {
+            return this.$slots.default.length
+        }
     }
-  },
-  computed: {
-    count () {
-      return this.$slots.default.length
-    }
-  }
 }
 </script>
 

@@ -50,57 +50,57 @@ import MiniArea from '../../../components/chart/MiniArea'
 
 const searchData = []
 for (let i = 0; i < 50; i++) {
-  searchData.push({
-    index: i + 1,
-    keyword: '关键词-' + i,
-    count: Math.floor(Math.random() * 1000),
-    range: Math.floor(Math.random() * 100),
-    status: Math.floor((Math.random() * 10) % 2)
-  })
+    searchData.push({
+        index: i + 1,
+        keyword: '关键词-' + i,
+        count: Math.floor(Math.random() * 1000),
+        range: Math.floor(Math.random() * 100),
+        status: Math.floor((Math.random() * 10) % 2)
+    })
 }
 
 const columns = [
-  {
-    dataIndex: 'index',
-    key: 'rank'
-  },
-  {
-    dataIndex: 'keyword',
-    key: 'keyword',
-    scopedSlots: { customRender: 'keyword' }
-  },
-  {
-    dataIndex: 'count',
-    key: 'users',
-    sorter: (a, b) => a.count - b.count
-  },
-  {
-    title: '周涨幅',
-    dataIndex: 'range',
-    key: 'range',
-    scopedSlots: { customRender: 'rang' }
-  }
+    {
+        dataIndex: 'index',
+        key: 'rank'
+    },
+    {
+        dataIndex: 'keyword',
+        key: 'keyword',
+        scopedSlots: { customRender: 'keyword' }
+    },
+    {
+        dataIndex: 'count',
+        key: 'users',
+        sorter: (a, b) => a.count - b.count
+    },
+    {
+        title: '周涨幅',
+        dataIndex: 'range',
+        key: 'range',
+        scopedSlots: { customRender: 'rang' }
+    }
 ]
 
 export default {
-  name: 'HotSearch',
-  components: { MiniArea },
-  i18n: require('./i18n-search'),
-  data () {
-    return {
-      searchData,
-      columns
+    name: 'HotSearch',
+    components: { MiniArea },
+    i18n: require('./i18n-search'),
+    data () {
+        return {
+            searchData,
+            columns
+        }
+    },
+    computed: {
+        tableColumns () {
+            const columns = this.columns
+            return columns.map(item => {
+                item.title = this.$t(item.key)
+                return item
+            })
+        }
     }
-  },
-  computed: {
-    tableColumns () {
-      const columns = this.columns
-      return columns.map(item => {
-        item.title = this.$t(item.key)
-        return item
-      })
-    }
-  }
 }
 </script>
 

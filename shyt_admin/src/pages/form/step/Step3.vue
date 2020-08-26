@@ -9,14 +9,14 @@
 <script>
 import Result from '@/components/result/Result'
 export default {
-  name: 'Step3',
-  i18n: require('./i18n'),
-  components: { Result },
-  methods: {
-    doOnceAgin () {
-      this.$emit('finish')
+    name: 'Step3',
+    i18n: require('./i18n'),
+    components: { Result },
+    methods: {
+        doOnceAgin () {
+            this.$emit('finish')
+        }
     }
-  }
 }
 </script>
 

@@ -71,24 +71,24 @@
 
 <script>
 export default {
-  name: 'TaskForm',
-  props: ['showSubmit'],
-  i18n: require('./i18n-task'),
-  data () {
-    return {
-      form: this.$form.createForm(this)
-    }
-  },
-  methods: {
-    handleSubmit (e) {
-      e.preventDefault()
-      this.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values)
+    name: 'TaskForm',
+    props: ['showSubmit'],
+    i18n: require('./i18n-task'),
+    data () {
+        return {
+            form: this.$form.createForm(this)
         }
-      })
+    },
+    methods: {
+        handleSubmit (e) {
+            e.preventDefault()
+            this.form.validateFields((err, values) => {
+                if (!err) {
+                    console.log('Received values of form: ', values)
+                }
+            })
+        }
     }
-  }
 }
 </script>
 

@@ -11,16 +11,16 @@ axios.defaults.xsrfCookieName = xsrfHeaderName
 
 // 认证类型
 const AUTH_TYPE = {
-  BEARER: 'Bearer',
-  BASIC: 'basic',
-  AUTH1: 'auth1',
-  AUTH2: 'auth2'
+    BEARER: 'Bearer',
+    BASIC: 'basic',
+    AUTH1: 'auth1',
+    AUTH2: 'auth2'
 }
 
 // http method
 const METHOD = {
-  GET: 'get',
-  POST: 'post'
+    GET: 'get',
+    POST: 'post'
 }
 
 /**
@@ -31,14 +31,14 @@ const METHOD = {
  * @returns {Promise<AxiosResponse<T>>}
  */
 async function request (url, method, params) {
-  switch (method) {
+    switch (method) {
     case METHOD.GET:
-      return axios.get(url, { params })
+        return axios.get(url, { params })
     case METHOD.POST:
-      return axios.post(url, params)
+        return axios.post(url, params)
     default:
-      return axios.get(url, { params })
-  }
+        return axios.get(url, { params })
+    }
 }
 
 /**
@@ -47,16 +47,16 @@ async function request (url, method, params) {
  * @param authType {AUTH_TYPE} 认证类型，默认：{AUTH_TYPE.BEARER}
  */
 function setAuthorization (auth, authType = AUTH_TYPE.BEARER) {
-  switch (authType) {
+    switch (authType) {
     case AUTH_TYPE.BEARER:
-      Cookie.set(xsrfHeaderName, 'Bearer ' + auth.token, { expires: auth.expireAt })
-      break
+        Cookie.set(xsrfHeaderName, 'Bearer ' + auth.token, { expires: auth.expireAt })
+        break
     case AUTH_TYPE.BASIC:
     case AUTH_TYPE.AUTH1:
     case AUTH_TYPE.AUTH2:
     default:
-      break
-  }
+        break
+    }
 }
 
 /**
@@ -64,16 +64,16 @@ function setAuthorization (auth, authType = AUTH_TYPE.BEARER) {
  * @param authType {AUTH_TYPE} 认证类型
  */
 function removeAuthorization (authType = AUTH_TYPE.BEARER) {
-  switch (authType) {
+    switch (authType) {
     case AUTH_TYPE.BEARER:
-      Cookie.remove(xsrfHeaderName)
-      break
+        Cookie.remove(xsrfHeaderName)
+        break
     case AUTH_TYPE.BASIC:
     case AUTH_TYPE.AUTH1:
     case AUTH_TYPE.AUTH2:
     default:
-      break
-  }
+        break
+    }
 }
 
 /**
@@ -82,26 +82,26 @@ function removeAuthorization (authType = AUTH_TYPE.BEARER) {
  * @returns {boolean}
  */
 function checkAuthorization (authType = AUTH_TYPE.BEARER) {
-  switch (authType) {
+    switch (authType) {
     case AUTH_TYPE.BEARER:
-      if (Cookie.get(xsrfHeaderName)) {
-        return true
-      }
-      break
+        if (Cookie.get(xsrfHeaderName)) {
+            return true
+        }
+        break
     case AUTH_TYPE.BASIC:
     case AUTH_TYPE.AUTH1:
     case AUTH_TYPE.AUTH2:
     default:
-      break
-  }
-  return false
+        break
+    }
+    return false
 }
 
 export {
-  METHOD,
-  AUTH_TYPE,
-  request,
-  setAuthorization,
-  removeAuthorization,
-  checkAuthorization
+    METHOD,
+    AUTH_TYPE,
+    request,
+    setAuthorization,
+    removeAuthorization,
+    checkAuthorization
 }

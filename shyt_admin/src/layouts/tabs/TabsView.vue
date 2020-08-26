@@ -35,157 +35,160 @@ import { getI18nKey } from '@/utils/routerUtil'
 import AKeepAlive from '@/components/cache/AKeepAlive'
 
 export default {
-  name: 'TabsView',
-  i18n: require('./i18n'),
-  components: { PageToggleTransition, Contextmenu, AdminLayout, AKeepAlive },
-  data () {
-    return {
-      clearCaches: [],
-      pageList: [],
-      cachedKeys: [],
-      activePage: '',
-      menuVisible: false
-    }
-  },
-  computed: {
-    ...mapState('setting', ['multiPage', 'animate', 'layout']),
-    menuItemList () {
-      return [
-        { key: '1', icon: 'vertical-right', text: this.$t('closeLeft') },
-        { key: '2', icon: 'vertical-left', text: this.$t('closeRight') },
-        { key: '3', icon: 'close', text: this.$t('closeOthers') }
-      ]
+    name: 'TabsView',
+    i18n: require('./i18n'),
+    components: { PageToggleTransition, Contextmenu, AdminLayout, AKeepAlive },
+    data () {
+        return {
+            clearCaches: [],
+            pageList: [],
+            cachedKeys: [],
+            activePage: '',
+            menuVisible: false
+        }
     },
-    tabsOffset () {
-      return this.multiPage ? 24 : 0
-    }
-  },
-  created () {
-    const route = this.$route
-    this.pageList.push(route)
-    this.activePage = route.fullPath
-    if (this.multiPage) {
-      window.addEventListener('page:close', this.closePageListener)
-    }
-  },
-  mounted () {
-    this.correctPageMinHeight(-this.tabsOffset)
-    this.cachedKeys.push(this.$refs.tabContent.$vnode.key)
-  },
-  beforeDestroy () {
-    window.removeEventListener('page:close', this.closePageListener)
-    this.correctPageMinHeight(this.tabsOffset)
-  },
-  watch: {
-    $route: function (newRoute) {
-      this.activePage = newRoute.fullPath
-      if (!this.multiPage) {
-        this.pageList = [newRoute]
-      } else if (this.pageList.findIndex(item => item.fullPath == newRoute.fullPath) == -1) {
-        this.$nextTick(() => {
-          this.cachedKeys.push(this.$refs.tabContent.$vnode.key)
-        })
-        this.pageList.push(newRoute)
-      }
+    computed: {
+        ...mapState('setting', ['multiPage', 'animate', 'layout']),
+        menuItemList () {
+            return [
+                { key: '1', icon: 'vertical-right', text: this.$t('closeLeft') },
+                { key: '2', icon: 'vertical-left', text: this.$t('closeRight') },
+                { key: '3', icon: 'close', text: this.$t('closeOthers') }
+            ]
+        },
+        tabsOffset () {
+            return this.multiPage ? 24 : 0
+        }
     },
-    multiPage: function (newVal) {
-      if (!newVal) {
-        this.pageList = [this.$route]
+    created () {
+        const route = this.$route
+        this.pageList.push(route)
+        this.activePage = route.fullPath
+        if (this.multiPage) {
+            window.addEventListener('page:close', this.closePageListener)
+        }
+    },
+    mounted () {
+        this.correctPageMinHeight(-this.tabsOffset)
+        this.cachedKeys.push(this.$refs.tabContent.$vnode.key)
+    },
+    beforeDestroy () {
         window.removeEventListener('page:close', this.closePageListener)
-      } else {
-        window.addEventListener('page:close', this.closePageListener)
-      }
+        this.correctPageMinHeight(this.tabsOffset)
     },
-    tabsOffset (newVal, oldVal) {
-      this.correctPageMinHeight(oldVal - newVal)
+    watch: {
+        $route: function (newRoute) {
+            this.activePage = newRoute.fullPath
+            if (!this.multiPage) {
+                this.pageList = [newRoute]
+            // eslint-disable-next-line eqeqeq
+            } else if (this.pageList.findIndex(item => item.fullPath == newRoute.fullPath) == -1) {
+                this.$nextTick(() => {
+                    this.cachedKeys.push(this.$refs.tabContent.$vnode.key)
+                })
+                this.pageList.push(newRoute)
+            }
+        },
+        multiPage: function (newVal) {
+            if (!newVal) {
+                this.pageList = [this.$route]
+                window.removeEventListener('page:close', this.closePageListener)
+            } else {
+                window.addEventListener('page:close', this.closePageListener)
+            }
+        },
+        tabsOffset (newVal, oldVal) {
+            this.correctPageMinHeight(oldVal - newVal)
+        }
+    },
+    methods: {
+        changePage (key) {
+            this.activePage = key
+            this.$router.push(key)
+        },
+        editPage (key, action) {
+            this[action](key) // remove
+        },
+        remove (key, next) {
+            if (this.pageList.length === 1) {
+                return this.$message.warning(this.$t('warn'))
+            }
+            let index = this.pageList.findIndex(item => item.fullPath === key)
+            // 清除缓存
+            this.clearCaches = this.cachedKeys.splice(index, 1)
+            this.pageList.splice(index, 1)
+            if (next) {
+                this.$router.push(next)
+            } else if (key === this.activePage) {
+                index = index >= this.pageList.length ? this.pageList.length - 1 : index
+                this.activePage = this.pageList[index].fullPath
+                this.$router.push(this.activePage)
+            }
+        },
+        onContextmenu (e) {
+            const pageKey = getPageKey(e.target)
+            if (pageKey) {
+                e.preventDefault()
+                this.menuVisible = true
+            }
+        },
+        onMenuSelect (key, target) {
+            const pageKey = getPageKey(target)
+            switch (key) {
+            case '1': this.closeLeft(pageKey); break
+            case '2': this.closeRight(pageKey); break
+            case '3': this.closeOthers(pageKey); break
+            default: break
+            }
+        },
+        closeOthers (pageKey) {
+            const index = this.pageList.findIndex(item => item.fullPath === pageKey)
+            // 清除缓存
+            // eslint-disable-next-line eqeqeq
+            this.clearCaches = this.cachedKeys.filter((item, i) => i != index)
+            this.cachedKeys = this.cachedKeys.slice(index, index + 1)
+
+            this.pageList = this.pageList.slice(index, index + 1)
+            // eslint-disable-next-line eqeqeq
+            if (this.activePage != pageKey) {
+                this.activePage = pageKey
+                this.$router.push(this.activePage)
+            }
+        },
+        closeLeft (pageKey) {
+            const index = this.pageList.findIndex(item => item.fullPath === pageKey)
+            // 清除缓存
+            this.clearCaches = this.cachedKeys.filter((item, i) => i < index)
+            this.cachedKeys = this.cachedKeys.slice(index)
+
+            this.pageList = this.pageList.slice(index)
+            if (!this.pageList.find(item => item.fullPath === this.activePage)) {
+                this.activePage = pageKey
+                this.$router.push(this.activePage)
+            }
+        },
+        closeRight (pageKey) {
+            const index = this.pageList.findIndex(item => item.fullPath === pageKey)
+            // 清除缓存
+            this.clearCaches = this.cachedKeys.filter((item, i) => i > index)
+            this.cachedKeys = this.cachedKeys.slice(0, index + 1)
+
+            this.pageList = this.pageList.slice(0, index + 1)
+            if (!this.pageList.find(item => item.fullPath === this.activePage)) {
+                this.activePage = pageKey
+                this.$router.push(this.activePage)
+            }
+        },
+        pageName (page) {
+            return this.$t(getI18nKey(page.matched[page.matched.length - 1].path))
+        },
+        closePageListener (event) {
+            const { closeRoute, nextRoute } = event.detail
+            const closePath = typeof closeRoute === 'string' ? closeRoute : closeRoute.path
+            this.remove(closePath, nextRoute)
+        },
+        ...mapMutations('setting', ['correctPageMinHeight'])
     }
-  },
-  methods: {
-    changePage (key) {
-      this.activePage = key
-      this.$router.push(key)
-    },
-    editPage (key, action) {
-      this[action](key) // remove
-    },
-    remove (key, next) {
-      if (this.pageList.length === 1) {
-        return this.$message.warning(this.$t('warn'))
-      }
-      let index = this.pageList.findIndex(item => item.fullPath === key)
-      // 清除缓存
-      this.clearCaches = this.cachedKeys.splice(index, 1)
-      this.pageList.splice(index, 1)
-      if (next) {
-        this.$router.push(next)
-      } else if (key === this.activePage) {
-        index = index >= this.pageList.length ? this.pageList.length - 1 : index
-        this.activePage = this.pageList[index].fullPath
-        this.$router.push(this.activePage)
-      }
-    },
-    onContextmenu (e) {
-      const pageKey = getPageKey(e.target)
-      if (pageKey) {
-        e.preventDefault()
-        this.menuVisible = true
-      }
-    },
-    onMenuSelect (key, target) {
-      const pageKey = getPageKey(target)
-      switch (key) {
-        case '1': this.closeLeft(pageKey); break
-        case '2': this.closeRight(pageKey); break
-        case '3': this.closeOthers(pageKey); break
-        default: break
-      }
-    },
-    closeOthers (pageKey) {
-      const index = this.pageList.findIndex(item => item.fullPath === pageKey)
-      // 清除缓存
-      this.clearCaches = this.cachedKeys.filter((item, i) => i != index)
-      this.cachedKeys = this.cachedKeys.slice(index, index + 1)
-
-      this.pageList = this.pageList.slice(index, index + 1)
-      if (this.activePage != pageKey) {
-        this.activePage = pageKey
-        this.$router.push(this.activePage)
-      }
-    },
-    closeLeft (pageKey) {
-      const index = this.pageList.findIndex(item => item.fullPath === pageKey)
-      // 清除缓存
-      this.clearCaches = this.cachedKeys.filter((item, i) => i < index)
-      this.cachedKeys = this.cachedKeys.slice(index)
-
-      this.pageList = this.pageList.slice(index)
-      if (!this.pageList.find(item => item.fullPath === this.activePage)) {
-        this.activePage = pageKey
-        this.$router.push(this.activePage)
-      }
-    },
-    closeRight (pageKey) {
-      const index = this.pageList.findIndex(item => item.fullPath === pageKey)
-      // 清除缓存
-      this.clearCaches = this.cachedKeys.filter((item, i) => i > index)
-      this.cachedKeys = this.cachedKeys.slice(0, index + 1)
-
-      this.pageList = this.pageList.slice(0, index + 1)
-      if (!this.pageList.find(item => item.fullPath === this.activePage)) {
-        this.activePage = pageKey
-        this.$router.push(this.activePage)
-      }
-    },
-    pageName (page) {
-      return this.$t(getI18nKey(page.matched[page.matched.length - 1].path))
-    },
-    closePageListener (event) {
-      const { closeRoute, nextRoute } = event.detail
-      const closePath = typeof closeRoute === 'string' ? closeRoute : closeRoute.path
-      this.remove(closePath, nextRoute)
-    },
-    ...mapMutations('setting', ['correctPageMinHeight'])
-  }
 }
 /**
  * 由于ant-design-vue组件库的TabPane组件暂不支持自定义监听器，无法直接获取到右键target所在标签页的 pagekey 。故增加此方法用于
@@ -196,10 +199,10 @@ export default {
  * @returns {String}
  */
 function getPageKey (target, depth = 0) {
-  if (depth > 2 || !target) {
-    return null
-  }
-  return target.getAttribute('pagekey') || getPageKey(target.firstElementChild, ++depth)
+    if (depth > 2 || !target) {
+        return null
+    }
+    return target.getAttribute('pagekey') || getPageKey(target.firstElementChild, ++depth)
 }
 </script>
 

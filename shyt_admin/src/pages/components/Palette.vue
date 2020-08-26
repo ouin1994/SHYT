@@ -25,31 +25,31 @@ import ColorCheckbox from '../../components/checkbox/ColorCheckbox'
 const ColorCheckboxGroup = ColorCheckbox.Group
 
 export default {
-  name: 'Palette',
-  data () {
-    return {
-      color: 'rgb(245, 34, 45)'
-    }
-  },
-  components: { ColorCheckbox, ColorCheckboxGroup },
-  methods: {
-    changeColor (values, colors) {
-      this.color = this.calculateColor(colors)
+    name: 'Palette',
+    data () {
+        return {
+            color: 'rgb(245, 34, 45)'
+        }
     },
-    calculateColor (colors) {
-      let red = 0
-      let green = 0
-      let blue = 0
-      let values
-      colors.forEach(color => {
-        values = color.split('(')[1].split(')')[0].split(',')
-        red = Math.max(red, parseInt(values[0]))
-        green += Math.max(green, parseInt(values[1]))
-        blue += Math.max(blue, parseInt(values[2]))
-      })
-      return 'rgb(' + red + ',' + green + ',' + blue + ')'
+    components: { ColorCheckbox, ColorCheckboxGroup },
+    methods: {
+        changeColor (values, colors) {
+            this.color = this.calculateColor(colors)
+        },
+        calculateColor (colors) {
+            let red = 0
+            let green = 0
+            let blue = 0
+            let values
+            colors.forEach(color => {
+                values = color.split('(')[1].split(')')[0].split(',')
+                red = Math.max(red, parseInt(values[0]))
+                green += Math.max(green, parseInt(values[1]))
+                blue += Math.max(blue, parseInt(values[2]))
+            })
+            return 'rgb(' + red + ',' + green + ',' + blue + ')'
+        }
     }
-  }
 }
 </script>
 

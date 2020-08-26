@@ -25,87 +25,87 @@ import { mapState, mapMutations } from 'vuex'
 import { getI18nKey } from '@/utils/routerUtil'
 
 export default {
-  name: 'PageLayout',
-  components: { PageHeader },
-  props: ['desc', 'logo', 'title', 'avatar', 'linkList', 'extraImage'],
-  data () {
-    return {
-      page: {},
-      pageHeaderHeight: 0
-    }
-  },
-  watch: {
-    $route () {
-      this.page = this.$route.meta.page
-    }
-  },
-  updated () {
-    if (!this._inactive) {
-      this.updatePageHeight()
-    }
-  },
-  activated () {
-    this.updatePageHeight()
-  },
-  deactivated () {
-    this.updatePageHeight(0)
-  },
-  mounted () {
-    this.updatePageHeight()
-  },
-  created () {
-    this.page = this.$route.meta.page
-  },
-  beforeDestroy () {
-    this.updatePageHeight(0)
-  },
-  computed: {
-    ...mapState('setting', ['layout', 'multiPage', 'pageMinHeight']),
-    pageTitle () {
-      const pageTitle = this.page && this.page.title
-      return this.title || this.$t(pageTitle) || this.routeName
+    name: 'PageLayout',
+    components: { PageHeader },
+    props: ['desc', 'logo', 'title', 'avatar', 'linkList', 'extraImage'],
+    data () {
+        return {
+            page: {},
+            pageHeaderHeight: 0
+        }
     },
-    routeName () {
-      const route = this.$route
-      return this.$t(getI18nKey(route.matched[route.matched.length - 1].path))
+    watch: {
+        $route () {
+            this.page = this.$route.meta.page
+        }
     },
-    breadcrumb () {
-      const page = this.page
-      const breadcrumb = page && page.breadcrumb
-      if (breadcrumb) {
-        const i18nBreadcrumb = []
-        breadcrumb.forEach(item => {
-          i18nBreadcrumb.push(this.$t(item))
-        })
-        return i18nBreadcrumb
-      } else {
-        return this.getRouteBreadcrumb()
-      }
+    updated () {
+        if (!this._inactive) {
+            this.updatePageHeight()
+        }
     },
-    marginCorrect () {
-      return this.multiPage ? 24 : 0
-    }
-  },
-  methods: {
-    ...mapMutations('setting', ['correctPageMinHeight']),
-    getRouteBreadcrumb () {
-      const routes = this.$route.matched
-      const breadcrumb = []
-      routes.forEach(route => {
-        const path = route.path.length === 0 ? '/home' : route.path
-        breadcrumb.push(this.$t(getI18nKey(path)))
-      })
-      return breadcrumb
+    activated () {
+        this.updatePageHeight()
     },
-    /**
+    deactivated () {
+        this.updatePageHeight(0)
+    },
+    mounted () {
+        this.updatePageHeight()
+    },
+    created () {
+        this.page = this.$route.meta.page
+    },
+    beforeDestroy () {
+        this.updatePageHeight(0)
+    },
+    computed: {
+        ...mapState('setting', ['layout', 'multiPage', 'pageMinHeight']),
+        pageTitle () {
+            const pageTitle = this.page && this.page.title
+            return this.title || this.$t(pageTitle) || this.routeName
+        },
+        routeName () {
+            const route = this.$route
+            return this.$t(getI18nKey(route.matched[route.matched.length - 1].path))
+        },
+        breadcrumb () {
+            const page = this.page
+            const breadcrumb = page && page.breadcrumb
+            if (breadcrumb) {
+                const i18nBreadcrumb = []
+                breadcrumb.forEach(item => {
+                    i18nBreadcrumb.push(this.$t(item))
+                })
+                return i18nBreadcrumb
+            } else {
+                return this.getRouteBreadcrumb()
+            }
+        },
+        marginCorrect () {
+            return this.multiPage ? 24 : 0
+        }
+    },
+    methods: {
+        ...mapMutations('setting', ['correctPageMinHeight']),
+        getRouteBreadcrumb () {
+            const routes = this.$route.matched
+            const breadcrumb = []
+            routes.forEach(route => {
+                const path = route.path.length === 0 ? '/home' : route.path
+                breadcrumb.push(this.$t(getI18nKey(path)))
+            })
+            return breadcrumb
+        },
+        /**
      * 用于计算页面内容最小高度
      * @param newHeight
      */
-    updatePageHeight (newHeight = this.$refs.pageHeader.$el.offsetHeight + this.marginCorrect) {
-      this.correctPageMinHeight(this.pageHeaderHeight - newHeight)
-      this.pageHeaderHeight = newHeight
+        updatePageHeight (newHeight = this.$refs.pageHeader.$el.offsetHeight + this.marginCorrect) {
+            this.correctPageMinHeight(this.pageHeaderHeight - newHeight)
+            this.pageHeaderHeight = newHeight
+        }
     }
-  }
 }
 </script>
 

@@ -115,51 +115,53 @@ import fastEqual from 'fast-deep-equal'
 const ColorCheckboxGroup = ColorCheckbox.Group
 const ImgCheckboxGroup = ImgCheckbox.Group
 export default {
-  name: 'Setting',
-  i18n: require('./i18n'),
-  components: { ImgCheckboxGroup, ImgCheckbox, ColorCheckboxGroup, ColorCheckbox, SettingItem },
-  data () {
-    return {
-      copyConfig: 'Sorry, you have copied nothing O(∩_∩)O~'
-    }
-  },
-  computed: {
-    directions () {
-      return this.animates.find(item => item.name == this.animate.name).directions
-    },
-    ...mapState('setting', ['theme', 'layout', 'animate', 'animates', 'palettes', 'multiPage', 'weekMode', 'fixedHeader', 'fixedSideBar', 'hideSetting'])
-  },
-  watch: {
-    'animate.name': function (val) {
-      this.setAnimate({ name: val, direction: this.directions[0] })
-    }
-  },
-  methods: {
-    copyCode () {
-      const config = {}
-      // 提取配置
-      const mySetting = this.$store.state.setting
-      Object.keys(mySetting).forEach(key => {
-        const dftValue = setting[key]; const myValue = mySetting[key]
-        // 只提取与默认配置不同的配置项
-        if (dftValue != undefined && !fastEqual(dftValue, myValue)) {
-          config[key] = myValue
+    name: 'Setting',
+    i18n: require('./i18n'),
+    components: { ImgCheckboxGroup, ImgCheckbox, ColorCheckboxGroup, ColorCheckbox, SettingItem },
+    data () {
+        return {
+            copyConfig: 'Sorry, you have copied nothing O(∩_∩)O~'
         }
-      })
-      this.copyConfig = '// 自定义配置，参考 ./default/setting.config.js，需要自定义的属性在这里配置即可\n'
-      this.copyConfig += 'module.exports = '
-      this.copyConfig += formatConfig(config)
-
-      const clipboard = new Clipboard('#copyBtn')
-      const _this = this
-      clipboard.on('success', function () {
-        _this.$message.success('复制成功，覆盖文件 src/config/config.js 然后重启项目即可生效')
-        clipboard.destroy()
-      })
     },
-    ...mapMutations('setting', ['setTheme', 'setLayout', 'setMultiPage', 'setWeekMode',
-      'setFixedSideBar', 'setFixedHeader', 'setAnimate', 'setHideSetting'])
-  }
+    computed: {
+        directions () {
+            // eslint-disable-next-line eqeqeq
+            return this.animates.find(item => item.name == this.animate.name).directions
+        },
+        ...mapState('setting', ['theme', 'layout', 'animate', 'animates', 'palettes', 'multiPage', 'weekMode', 'fixedHeader', 'fixedSideBar', 'hideSetting'])
+    },
+    watch: {
+        'animate.name': function (val) {
+            this.setAnimate({ name: val, direction: this.directions[0] })
+        }
+    },
+    methods: {
+        copyCode () {
+            const config = {}
+            // 提取配置
+            const mySetting = this.$store.state.setting
+            Object.keys(mySetting).forEach(key => {
+                const dftValue = setting[key]; const myValue = mySetting[key]
+                // 只提取与默认配置不同的配置项
+                // eslint-disable-next-line eqeqeq
+                if (dftValue != undefined && !fastEqual(dftValue, myValue)) {
+                    config[key] = myValue
+                }
+            })
+            this.copyConfig = '// 自定义配置，参考 ./default/setting.config.js，需要自定义的属性在这里配置即可\n'
+            this.copyConfig += 'module.exports = '
+            this.copyConfig += formatConfig(config)
+
+            const clipboard = new Clipboard('#copyBtn')
+            const _this = this
+            clipboard.on('success', function () {
+                _this.$message.success('复制成功，覆盖文件 src/config/config.js 然后重启项目即可生效')
+                clipboard.destroy()
+            })
+        },
+        ...mapMutations('setting', ['setTheme', 'setLayout', 'setMultiPage', 'setWeekMode',
+            'setFixedSideBar', 'setFixedHeader', 'setAnimate', 'setHideSetting'])
+    }
 }
 </script>
 

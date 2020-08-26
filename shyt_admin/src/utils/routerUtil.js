@@ -10,42 +10,42 @@ import { checkAuthorization } from '@/utils/request'
  * @param routerMap 本地路由组件注册配置
  */
 function parseRoutes (routesConfig, routerMap) {
-  const routes = []
-  routesConfig.forEach(item => {
+    const routes = []
+    routesConfig.forEach(item => {
     // 获取注册在 routerMap 中的 router，初始化 routeCfg
-    let router; let routeCfg = {}
-    if (typeof item === 'string' && routerMap[item]) {
-      router = routerMap[item]
-      routeCfg = { path: router.path || item, router: item }
-    } else if (typeof item === 'object') {
-      router = routerMap[item.router]
-      routeCfg = item
-    }
-    // 从 router 和 routeCfg 解析路由
-    if (!router) {
-      console.warn(`can't find register for router ${routeCfg.router}, please register it in advance.`)
-    } else {
-      const route = {
-        path: routeCfg.path || router.path || routeCfg.router,
-        name: routeCfg.name || router.name,
-        component: router.component,
-        redirect: routeCfg.redirect || router.redirect,
-        meta: {
-          authority: routeCfg.authority || router.authority || '*',
-          icon: routeCfg.icon || router.icon,
-          page: routeCfg.page || router.page
+        let router; let routeCfg = {}
+        if (typeof item === 'string' && routerMap[item]) {
+            router = routerMap[item]
+            routeCfg = { path: router.path || item, router: item }
+        } else if (typeof item === 'object') {
+            router = routerMap[item.router]
+            routeCfg = item
         }
-      }
-      if (routeCfg.invisible || router.invisible) {
-        route.meta.invisible = true
-      }
-      if (routeCfg.children && routeCfg.children.length > 0) {
-        route.children = parseRoutes(routeCfg.children, routerMap)
-      }
-      routes.push(route)
-    }
-  })
-  return routes
+        // 从 router 和 routeCfg 解析路由
+        if (!router) {
+            console.warn(`can't find register for router ${routeCfg.router}, please register it in advance.`)
+        } else {
+            const route = {
+                path: routeCfg.path || router.path || routeCfg.router,
+                name: routeCfg.name || router.name,
+                component: router.component,
+                redirect: routeCfg.redirect || router.redirect,
+                meta: {
+                    authority: routeCfg.authority || router.authority || '*',
+                    icon: routeCfg.icon || router.icon,
+                    page: routeCfg.page || router.page
+                }
+            }
+            if (routeCfg.invisible || router.invisible) {
+                route.meta.invisible = true
+            }
+            if (routeCfg.children && routeCfg.children.length > 0) {
+                route.children = parseRoutes(routeCfg.children, routerMap)
+            }
+            routes.push(route)
+        }
+    })
+    return routes
 }
 
 /**
@@ -56,32 +56,32 @@ function parseRoutes (routesConfig, routerMap) {
  * @param routesConfig 路由配置
  */
 function loadRoutes ({ router, store, i18n }, routesConfig) {
-  // 如果 routesConfig 有值，则更新到本地，否则从本地获取
-  if (routesConfig) {
-    store.commit('account/setRoutesConfig', routesConfig)
-  } else {
-    routesConfig = store.getters['account/routesConfig']
-  }
-  // 如果开启了异步路由，则加载异步路由配置
-  const asyncRoutes = store.state.setting.asyncRoutes
-  if (asyncRoutes) {
-    if (routesConfig && routesConfig.length > 0) {
-      const routes = parseRoutes(routesConfig, routerMap)
-      formatAuthority(routes)
-      const finalRoutes = mergeRoutes(router.options.routes, routes)
-      router.options = { ...router.options, routes: finalRoutes }
-      router.matcher = new Router({ ...router.options, routes: [] }).matcher
-      router.addRoutes(finalRoutes)
+    // 如果 routesConfig 有值，则更新到本地，否则从本地获取
+    if (routesConfig) {
+        store.commit('account/setRoutesConfig', routesConfig)
+    } else {
+        routesConfig = store.getters['account/routesConfig']
     }
-  }
-  // 提取路由国际化数据
-  mergeI18nFromRoutes(i18n, router.options.routes)
-  // 初始化Admin后台菜单数据
-  const rootRoute = router.options.routes.find(item => item.path === '/')
-  const menuRoutes = rootRoute && rootRoute.children
-  if (menuRoutes) {
-    store.commit('setting/setMenuData', menuRoutes)
-  }
+    // 如果开启了异步路由，则加载异步路由配置
+    const asyncRoutes = store.state.setting.asyncRoutes
+    if (asyncRoutes) {
+        if (routesConfig && routesConfig.length > 0) {
+            const routes = parseRoutes(routesConfig, routerMap)
+            formatAuthority(routes)
+            const finalRoutes = mergeRoutes(router.options.routes, routes)
+            router.options = { ...router.options, routes: finalRoutes }
+            router.matcher = new Router({ ...router.options, routes: [] }).matcher
+            router.addRoutes(finalRoutes)
+        }
+    }
+    // 提取路由国际化数据
+    mergeI18nFromRoutes(i18n, router.options.routes)
+    // 初始化Admin后台菜单数据
+    const rootRoute = router.options.routes.find(item => item.path === '/')
+    const menuRoutes = rootRoute && rootRoute.children
+    if (menuRoutes) {
+        store.commit('setting/setMenuData', menuRoutes)
+    }
 }
 
 /**
@@ -91,10 +91,10 @@ function loadRoutes ({ router, store, i18n }, routesConfig) {
  * @returns {Route[]}
  */
 function mergeRoutes (target, source) {
-  const routesMap = {}
-  target.forEach(item => routesMap[item.path] = item)
-  source.forEach(item => routesMap[item.path] = item)
-  return Object.values(routesMap)
+    const routesMap = {}
+    target.forEach(item => (routesMap[item.path] = item))
+    source.forEach(item => (routesMap[item.path] = item))
+    return Object.values(routesMap)
 }
 
 /**
@@ -102,13 +102,13 @@ function mergeRoutes (target, source) {
  * @param router 应用路由实例
  */
 function loginGuard (router) {
-  router.beforeEach((to, from, next) => {
-    if (!loginIgnore.includes(to) && !checkAuthorization()) {
-      next({ path: '/login' })
-    } else {
-      next()
-    }
-  })
+    router.beforeEach((to, from, next) => {
+        if (!loginIgnore.includes(to) && !checkAuthorization()) {
+            next({ path: '/login' })
+        } else {
+            next()
+        }
+    })
 }
 
 /**
@@ -117,15 +117,15 @@ function loginGuard (router) {
  * @param store 应用的 vuex.store 实例
  */
 function authorityGuard (router, store) {
-  router.beforeEach((to, form, next) => {
-    const permissions = store.getters['account/permissions']
-    const roles = store.getters['account/roles']
-    if (!hasPermission(to, permissions) && !hasRole(to, roles)) {
-      next({ path: '/403' })
-    } else {
-      next()
-    }
-  })
+    router.beforeEach((to, form, next) => {
+        const permissions = store.getters['account/permissions']
+        const roles = store.getters['account/roles']
+        if (!hasPermission(to, permissions) && !hasRole(to, roles)) {
+            next({ path: '/403' })
+        } else {
+            next()
+        }
+    })
 }
 
 /**
@@ -135,14 +135,14 @@ function authorityGuard (router, store) {
  * @returns {boolean|*}
  */
 function hasPermission (route, permissions) {
-  const authority = route.meta.authority || '*'
-  let required = '*'
-  if (typeof authority === 'string') {
-    required = authority
-  } else if (typeof authority === 'object') {
-    required = authority.permission
-  }
-  return required === '*' || (permissions && permissions.findIndex(item => item === required || item.id === required) !== -1)
+    const authority = route.meta.authority || '*'
+    let required = '*'
+    if (typeof authority === 'string') {
+        required = authority
+    } else if (typeof authority === 'object') {
+        required = authority.permission
+    }
+    return required === '*' || (permissions && permissions.findIndex(item => item === required || item.id === required) !== -1)
 }
 
 /**
@@ -151,12 +151,12 @@ function hasPermission (route, permissions) {
  * @param roles 用户角色集合
  */
 function hasRole (route, roles) {
-  const authority = route.meta.authority || '*'
-  let required
-  if (typeof authority === 'object') {
-    required = authority.role
-  }
-  return authority === '*' || (required && roles && roles.findIndex(item => item === required || item.id === required) !== -1)
+    const authority = route.meta.authority || '*'
+    let required
+    if (typeof authority === 'object') {
+        required = authority.role
+    }
+    return authority === '*' || (required && roles && roles.findIndex(item => item === required || item.id === required) !== -1)
 }
 
 /**
@@ -164,29 +164,29 @@ function hasRole (route, roles) {
  * @param routes
  */
 function formatAuthority (routes) {
-  routes.forEach(route => {
-    const meta = route.meta
-    if (meta) {
-      let authority = {}
-      if (!meta.authority) {
-        authority.permission = '*'
-      } else if (typeof meta.authority === 'string') {
-        authority.permission = meta.authority
-      } else if (typeof meta.authority === 'object') {
-        authority = meta.authority
-      } else {
-        console.log(typeof meta.authority)
-      }
-      meta.authority = authority
-    } else {
-      route.meta = {
-        authority: { permission: '*' }
-      }
-    }
-    if (route.children) {
-      formatAuthority(route.children)
-    }
-  })
+    routes.forEach(route => {
+        const meta = route.meta
+        if (meta) {
+            let authority = {}
+            if (!meta.authority) {
+                authority.permission = '*'
+            } else if (typeof meta.authority === 'string') {
+                authority.permission = meta.authority
+            } else if (typeof meta.authority === 'object') {
+                authority = meta.authority
+            } else {
+                console.log(typeof meta.authority)
+            }
+            meta.authority = authority
+        } else {
+            route.meta = {
+                authority: { permission: '*' }
+            }
+        }
+        if (route.children) {
+            formatAuthority(route.children)
+        }
+    })
 }
 
 /**
@@ -195,9 +195,10 @@ function formatAuthority (routes) {
  * @returns {*}
  */
 function getI18nKey (path) {
-  const keys = path.split('/').filter(item => !item.startsWith(':') && item != '')
-  keys.push('name')
-  return keys.join('.')
+    // eslint-disable-next-line eqeqeq
+    const keys = path.split('/').filter(item => !item.startsWith(':') && item != '')
+    keys.push('name')
+    return keys.join('.')
 }
 
 export { parseRoutes, loadRoutes, loginGuard, authorityGuard, formatAuthority, getI18nKey }

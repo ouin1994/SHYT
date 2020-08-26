@@ -46,119 +46,119 @@
 
 <script>
 const columns = [
-  {
-    title: '成员姓名',
-    dataIndex: 'name',
-    key: 'name',
-    width: '20%',
-    scopedSlots: { customRender: 'name' }
-  },
-  {
-    title: '工号',
-    dataIndex: 'number',
-    key: 'number',
-    width: '20%',
-    scopedSlots: { customRender: 'number' }
-  },
-  {
-    title: '所属部门',
-    dataIndex: 'department',
-    key: 'department',
-    width: '40%',
-    scopedSlots: { customRender: 'department' }
-  },
-  {
-    title: '操作',
-    key: 'operation',
-    scopedSlots: { customRender: 'operation' }
-  }
+    {
+        title: '成员姓名',
+        dataIndex: 'name',
+        key: 'name',
+        width: '20%',
+        scopedSlots: { customRender: 'name' }
+    },
+    {
+        title: '工号',
+        dataIndex: 'number',
+        key: 'number',
+        width: '20%',
+        scopedSlots: { customRender: 'number' }
+    },
+    {
+        title: '所属部门',
+        dataIndex: 'department',
+        key: 'department',
+        width: '40%',
+        scopedSlots: { customRender: 'department' }
+    },
+    {
+        title: '操作',
+        key: 'operation',
+        scopedSlots: { customRender: 'operation' }
+    }
 ]
 
 const dataSource = [
-  {
-    key: 1,
-    name: '小明',
-    number: '001',
-    editable: false,
-    department: '行政部'
-  },
-  {
-    key: 2,
-    name: '李莉',
-    number: '002',
-    editable: false,
-    department: 'IT部'
-  },
-  {
-    key: 3,
-    name: '王小帅',
-    number: '003',
-    editable: false,
-    department: '财务部'
-  }
+    {
+        key: 1,
+        name: '小明',
+        number: '001',
+        editable: false,
+        department: '行政部'
+    },
+    {
+        key: 2,
+        name: '李莉',
+        number: '002',
+        editable: false,
+        department: 'IT部'
+    },
+    {
+        key: 3,
+        name: '王小帅',
+        number: '003',
+        editable: false,
+        department: '财务部'
+    }
 ]
 
 export default {
-  name: 'UserForm',
-  i18n: require('./i18n-user'),
-  data () {
-    return {
-      columns,
-      dataSource
+    name: 'UserForm',
+    i18n: require('./i18n-user'),
+    data () {
+        return {
+            columns,
+            dataSource
+        }
+    },
+    computed: {
+        dataColumns () {
+            return this.columns.map(column => {
+                column.title = this.$t('table.' + column.key)
+                return column
+            })
+        }
+    },
+    methods: {
+        handleSubmit (e) {
+            e.preventDefault()
+        },
+        newMember () {
+            this.dataSource.push({
+                key: this.dataSource.length + 1,
+                name: '',
+                number: '',
+                department: '',
+                editable: true,
+                isNew: true
+            })
+        },
+        remove (key) {
+            const newData = this.dataSource.filter(item => item.key !== key)
+            this.dataSource = newData
+        },
+        saveRow (key) {
+            const target = this.dataSource.filter(item => item.key === key)[0]
+            target.editable = false
+            target.isNew = false
+        },
+        toggle (key) {
+            const target = this.dataSource.filter(item => item.key === key)[0]
+            target.editable = !target.editable
+        },
+        getRowByKey (key, newData) {
+            const data = this.dataSource
+            return (newData || data).filter(item => item.key === key)[0]
+        },
+        cancle (key) {
+            const target = this.dataSource.filter(item => item.key === key)[0]
+            target.editable = false
+        },
+        handleChange (value, key, column) {
+            const newData = [...this.dataSource]
+            const target = newData.filter(item => key === item.key)[0]
+            if (target) {
+                target[column] = value
+                this.dataSource = newData
+            }
+        }
     }
-  },
-  computed: {
-    dataColumns () {
-      return this.columns.map(column => {
-        column.title = this.$t('table.' + column.key)
-        return column
-      })
-    }
-  },
-  methods: {
-    handleSubmit (e) {
-      e.preventDefault()
-    },
-    newMember () {
-      this.dataSource.push({
-        key: this.dataSource.length + 1,
-        name: '',
-        number: '',
-        department: '',
-        editable: true,
-        isNew: true
-      })
-    },
-    remove (key) {
-      const newData = this.dataSource.filter(item => item.key !== key)
-      this.dataSource = newData
-    },
-    saveRow (key) {
-      const target = this.dataSource.filter(item => item.key === key)[0]
-      target.editable = false
-      target.isNew = false
-    },
-    toggle (key) {
-      const target = this.dataSource.filter(item => item.key === key)[0]
-      target.editable = !target.editable
-    },
-    getRowByKey (key, newData) {
-      const data = this.dataSource
-      return (newData || data).filter(item => item.key === key)[0]
-    },
-    cancle (key) {
-      const target = this.dataSource.filter(item => item.key === key)[0]
-      target.editable = false
-    },
-    handleChange (value, key, column) {
-      const newData = [...this.dataSource]
-      const target = newData.filter(item => key === item.key)[0]
-      if (target) {
-        target[column] = value
-        this.dataSource = newData
-      }
-    }
-  }
 }
 </script>
 

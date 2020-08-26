@@ -29,7 +29,7 @@ module.exports = {
 
         "indent": [2, 4], // 强制使用一致的缩进
         "eqeqeq": [2, 'always'], // 要求使用 === 和 !==
-        "no-multiple-empty-lines": ["error", {"max": 2}], // 空行最多不能超过2行
+        "no-multiple-empty-lines": ["error", { "max": 2 }], // 空行最多不能超过2行
         "spaced-comment": 0,  //注释风格要不要有空格什么的
         "no-trailing-spaces": 1, // 禁止行尾空格
         "no-callback-literal": 0,
@@ -38,12 +38,9 @@ module.exports = {
         // allow async-await
         "generator-star-spacing": 0,
         // allow debugger during development
-<<<<<<< HEAD
-        "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0
-    
-=======
         "no-debugger": process.env.NODE_ENV === "production" ? 2 : 0,
-        "no-var":2,
->>>>>>> 989c7348933cd4f57d3232aad3d1376d5a24c3d7
+        "no-var": 2,
+        "camelcase": 0,
+        "no-extend-native": 0
     }
 }

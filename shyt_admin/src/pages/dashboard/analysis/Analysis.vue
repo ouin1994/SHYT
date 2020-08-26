@@ -117,25 +117,25 @@ import Trend from '../../../components/chart/Trend'
 const rankList = []
 
 for (let i = 0; i < 8; i++) {
-  rankList.push({
-    name: '桃源村' + i + '号店',
-    total: 1234.56 - i * 100
-  })
+    rankList.push({
+        name: '桃源村' + i + '号店',
+        total: 1234.56 - i * 100
+    })
 }
 
 export default {
-  name: 'Analysis',
-  i18n: require('./i18n'),
-  data () {
-    return {
-      rankList,
-      loading: true
-    }
-  },
-  created () {
-    setTimeout(() => this.loading = !this.loading, 1000)
-  },
-  components: { Trend, SalesData, HotSearch, RankingList, Bar, MiniProgress, MiniBar, MiniArea, ChartCard }
+    name: 'Analysis',
+    i18n: require('./i18n'),
+    data () {
+        return {
+            rankList,
+            loading: true
+        }
+    },
+    created () {
+        setTimeout(() => (this.loading = !this.loading), 1000)
+    },
+    components: { Trend, SalesData, HotSearch, RankingList, Bar, MiniProgress, MiniBar, MiniArea, ChartCard }
 }
 </script>
 

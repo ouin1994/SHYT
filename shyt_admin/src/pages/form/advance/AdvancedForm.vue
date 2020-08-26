@@ -22,33 +22,33 @@ import UserForm from './UserForm'
 import FooterToolBar from '@/components/tool/FooterToolBar'
 
 export default {
-  name: 'AdvancedForm',
-  components: { FooterToolBar, UserForm, TaskForm, RepositoryForm },
-  i18n: require('./i18n'),
-  data () {
-    return {
-      loading: false
-    }
-  },
-  computed: {
-    desc () {
-      return this.$t('desc')
-    }
-  },
-  methods: {
-    validate () {
-      this.$refs.repository.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values)
+    name: 'AdvancedForm',
+    components: { FooterToolBar, UserForm, TaskForm, RepositoryForm },
+    i18n: require('./i18n'),
+    data () {
+        return {
+            loading: false
         }
-      })
-      this.$refs.task.form.validateFields((err, values) => {
-        if (!err) {
-          console.log('Received values of form: ', values)
+    },
+    computed: {
+        desc () {
+            return this.$t('desc')
         }
-      })
+    },
+    methods: {
+        validate () {
+            this.$refs.repository.form.validateFields((err, values) => {
+                if (!err) {
+                    console.log('Received values of form: ', values)
+                }
+            })
+            this.$refs.task.form.validateFields((err, values) => {
+                if (!err) {
+                    console.log('Received values of form: ', values)
+                }
+            })
+        }
     }
-  }
 }
 </script>
 

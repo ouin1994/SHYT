@@ -9,60 +9,60 @@
 <script>
 import TagSelectOption from './TagSelectOption'
 export default {
-  name: 'TagSelect',
-  Option: TagSelectOption,
-  components: { TagSelectOption },
-  data () {
-    return {
-      showTrigger: false,
-      collapsed: true,
-      screenWidth: document.body.clientWidth,
-      checkAll: false
-    }
-  },
-  watch: {
-    screenWidth: function () {
-      this.showTrigger = this.needTrigger()
+    name: 'TagSelect',
+    Option: TagSelectOption,
+    components: { TagSelectOption },
+    data () {
+        return {
+            showTrigger: false,
+            collapsed: true,
+            screenWidth: document.body.clientWidth,
+            checkAll: false
+        }
     },
-    collapsed: function (val) {
-      this.$el.style.maxHeight = val ? '39px' : '78px'
-    }
-  },
-  mounted () {
-    const _this = this
-    // 此处延迟执行，是为解决mouted未完全完成情况下引发的trigger显示bug
-    setTimeout(() => {
-      _this.showTrigger = _this.needTrigger()
-      _this.$refs.trigger.style.display = _this.showTrigger ? 'inline' : 'none'
-    }, 1)
-    window.onresize = () => {
-      return (() => {
-        window.screenWidth = document.body.clientWidth
-        _this.screenWidth = window.screenWidth
-      })()
-    }
-  },
-  methods: {
-    needTrigger () {
-      return this.$el.clientHeight < this.$el.scrollHeight || this.$el.scrollHeight > 39
+    watch: {
+        screenWidth: function () {
+            this.showTrigger = this.needTrigger()
+        },
+        collapsed: function (val) {
+            this.$el.style.maxHeight = val ? '39px' : '78px'
+        }
     },
-    toggle () {
-      this.collapsed = !this.collapsed
+    mounted () {
+        const _this = this
+        // 此处延迟执行，是为解决mouted未完全完成情况下引发的trigger显示bug
+        setTimeout(() => {
+            _this.showTrigger = _this.needTrigger()
+            _this.$refs.trigger.style.display = _this.showTrigger ? 'inline' : 'none'
+        }, 1)
+        window.onresize = () => {
+            return (() => {
+                window.screenWidth = document.body.clientWidth
+                _this.screenWidth = window.screenWidth
+            })()
+        }
     },
-    getAllTags () {
-      const tagList = this.$children.filter((item) => {
-        return item.isTagSelectOption
-      })
-      return tagList
-    },
-    toggleCheck () {
-      this.checkAll = !this.checkAll
-      const tagList = this.getAllTags()
-      tagList.forEach((item) => {
-        item.checked = this.checkAll
-      })
+    methods: {
+        needTrigger () {
+            return this.$el.clientHeight < this.$el.scrollHeight || this.$el.scrollHeight > 39
+        },
+        toggle () {
+            this.collapsed = !this.collapsed
+        },
+        getAllTags () {
+            const tagList = this.$children.filter((item) => {
+                return item.isTagSelectOption
+            })
+            return tagList
+        },
+        toggleCheck () {
+            this.checkAll = !this.checkAll
+            const tagList = this.getAllTags()
+            tagList.forEach((item) => {
+                item.checked = this.checkAll
+            })
+        }
     }
-  }
 }
 </script>
 

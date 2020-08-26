@@ -11,131 +11,134 @@
 
 <script>
 const Group = {
-  name: 'ImgCheckboxGroup',
-  props: {
-    multiple: {
-      type: Boolean,
-      required: false,
-      default: false
+    name: 'ImgCheckboxGroup',
+    props: {
+        multiple: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        defaultValues: {
+            type: Array,
+            required: false,
+            default: () => []
+        }
     },
-    defaultValues: {
-      type: Array,
-      required: false,
-      default: () => []
-    }
-  },
-  data () {
-    return {
-      values: [],
-      options: []
-    }
-  },
-  provide () {
-    return {
-      groupContext: this
-    }
-  },
-  watch: {
-    values: function (value) {
-      this.$emit('change', value)
-      // // 此条件是为解决单选时，触发两次chang事件问题
-      // if (!(newVal.length === 1 && oldVal.length === 1 && newVal[0] === oldVal[0])) {
-      //   this.$emit('change', this.values)
-      // }
-    }
-  },
-  methods: {
-    handleChange (option) {
-      if (!option.checked) {
-        if (this.values.indexOf(option.value) > -1) {
-          this.values = this.values.filter(item => item != option.value)
+    data () {
+        return {
+            values: [],
+            options: []
         }
-      } else {
-        if (!this.multiple) {
-          this.values = [option.value]
-          this.options.forEach(item => {
-            if (item.value != option.value) {
-              item.sChecked = false
+    },
+    provide () {
+        return {
+            groupContext: this
+        }
+    },
+    watch: {
+        values: function (value) {
+            this.$emit('change', value)
+            // // 此条件是为解决单选时，触发两次chang事件问题
+            // if (!(newVal.length === 1 && oldVal.length === 1 && newVal[0] === oldVal[0])) {
+            //   this.$emit('change', this.values)
+            // }
+        }
+    },
+    methods: {
+        handleChange (option) {
+            if (!option.checked) {
+                if (this.values.indexOf(option.value) > -1) {
+                    // eslint-disable-next-line eqeqeq
+                    this.values = this.values.filter(item => item != option.value)
+                }
+            } else {
+                if (!this.multiple) {
+                    this.values = [option.value]
+                    this.options.forEach(item => {
+                        // eslint-disable-next-line eqeqeq
+                        if (item.value != option.value) {
+                            item.sChecked = false
+                        }
+                    })
+                } else {
+                    this.values.push(option.value)
+                }
             }
-          })
-        } else {
-          this.values.push(option.value)
         }
-      }
+    },
+    render (h) {
+        return h(
+            'div',
+            {
+                attrs: { style: 'display: flex' }
+            },
+            [this.$slots.default]
+        )
     }
-  },
-  render (h) {
-    return h(
-      'div',
-      {
-        attrs: { style: 'display: flex' }
-      },
-      [this.$slots.default]
-    )
-  }
 }
 
 export default {
-  name: 'ImgCheckbox',
-  Group,
-  props: {
-    checked: {
-      type: Boolean,
-      required: false,
-      default: false
+    name: 'ImgCheckbox',
+    Group,
+    props: {
+        checked: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
+        img: {
+            type: String,
+            required: true
+        },
+        value: {
+            required: true
+        },
+        title: String
     },
-    img: {
-      type: String,
-      required: true
+    data () {
+        return {
+            sChecked: this.initChecked()
+        }
     },
-    value: {
-      required: true
+    inject: ['groupContext'],
+    watch: {
+        sChecked: function () {
+            const option = {
+                value: this.value,
+                checked: this.sChecked
+            }
+            this.$emit('change', option)
+            const groupContext = this.groupContext
+            if (groupContext) {
+                groupContext.handleChange(option)
+            }
+        }
     },
-    title: String
-  },
-  data () {
-    return {
-      sChecked: this.initChecked()
-    }
-  },
-  inject: ['groupContext'],
-  watch: {
-    sChecked: function () {
-      const option = {
-        value: this.value,
-        checked: this.sChecked
-      }
-      this.$emit('change', option)
-      const groupContext = this.groupContext
-      if (groupContext) {
-        groupContext.handleChange(option)
-      }
-    }
-  },
-  created () {
-    const groupContext = this.groupContext
-    if (groupContext) {
-      this.sChecked = groupContext.defaultValues.length > 0 ? groupContext.defaultValues.indexOf(this.value) >= 0 : this.sChecked
-      groupContext.options.push(this)
-    }
-  },
-  methods: {
-    toggle () {
-      if (this.groupContext.multiple || !this.sChecked) {
-        this.sChecked = !this.sChecked
-      }
+    created () {
+        const groupContext = this.groupContext
+        if (groupContext) {
+            this.sChecked = groupContext.defaultValues.length > 0 ? groupContext.defaultValues.indexOf(this.value) >= 0 : this.sChecked
+            groupContext.options.push(this)
+        }
     },
-    initChecked () {
-      const groupContext = this.groupContext
-      if (!groupContext) {
-        return this.checked
-      } else if (groupContext.multiple) {
-        return groupContext.defaultValues.indexOf(this.value) > -1
-      } else {
-        return groupContext.defaultValues[0] == this.value
-      }
+    methods: {
+        toggle () {
+            if (this.groupContext.multiple || !this.sChecked) {
+                this.sChecked = !this.sChecked
+            }
+        },
+        initChecked () {
+            const groupContext = this.groupContext
+            if (!groupContext) {
+                return this.checked
+            } else if (groupContext.multiple) {
+                return groupContext.defaultValues.indexOf(this.value) > -1
+            } else {
+                // eslint-disable-next-line eqeqeq
+                return groupContext.defaultValues[0] == this.value
+            }
+        }
     }
-  }
 }
 </script>
 
