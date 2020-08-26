@@ -118,50 +118,49 @@
 import PageLayout from '@/layouts/PageLayout'
 import DetailList from '@/components/tool/DetailList'
 import AStepItem from '@/components/tool/AStepItem'
-import {operation1, operation2, operation3, operationColumns} from '@/mock/common/tableData'
-import {mapState} from 'vuex'
-import HeadInfo from '@/components/tool/HeadInfo';
-
+import { operation1, operation2, operation3, operationColumns } from '@/mock/common/tableData'
+import { mapState } from 'vuex'
+import HeadInfo from '@/components/tool/HeadInfo'
 
 const DetailListItem = DetailList.Item
 const AStepItemGroup = AStepItem.Group
 
 const tabList = [
-    {
-        key: '1',
-        tab: '操作日志一'
-    },
-    {
-        key: '2',
-        tab: '操作日志二'
-    },
-    {
-        key: '3',
-        tab: '操作日志三'
-    }
+  {
+    key: '1',
+    tab: '操作日志一'
+  },
+  {
+    key: '2',
+    tab: '操作日志二'
+  },
+  {
+    key: '3',
+    tab: '操作日志三'
+  }
 ]
 
 export default {
-    name: 'AdvancedDetail',
-    components: {HeadInfo, AStepItemGroup, AStepItem, DetailListItem, DetailList, PageLayout},
-    data () {
-        return {
-            tabList,
-            operationColumns,
-            operation1,
-            operation2,
-            operation3,
-            activeTabKey: '2'
-        }
-    },
-    computed: {
-        ...mapState('setting', ['isMobile'])
-    },
-    methods: {
-        onTabChange (key) {
-            console.log(key)
-        }
-    },
+  name: 'AdvancedDetail',
+  components: { HeadInfo, AStepItemGroup, AStepItem, DetailListItem, DetailList, PageLayout },
+  data () {
+    return {
+      tabList,
+      operationColumns,
+      operation1,
+      operation2,
+      operation3,
+      activeTabKey: '2'
+    }
+  },
+  computed: {
+    ...mapState('setting', ['isMobile'])
+  },
+  methods: {
+    onTabChange (key) {
+      console.log(key)
+    }
+  }
 }
 </script>
 

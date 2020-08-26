@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import routesI18n from '@/router/i18n'
 import './Objects'
-import {getI18nKey} from '@/utils/routerUtil'
+import { getI18nKey } from '@/utils/routerUtil'
 
 /**
  * 创建 i18n 配置
@@ -10,15 +10,15 @@ import {getI18nKey} from '@/utils/routerUtil'
  * @param fallback 回退语言
  * @returns {VueI18n}
  */
-function initI18n(locale, fallback) {
-    Vue.use(VueI18n)
-    let i18nOptions = {
-        locale,
-        fallbackLocale: fallback,
-        silentFallbackWarn: true,
-        messages: routesI18n.messages
-    }
-    return new VueI18n(i18nOptions)
+function initI18n (locale, fallback) {
+  Vue.use(VueI18n)
+  const i18nOptions = {
+    locale,
+    fallbackLocale: fallback,
+    silentFallbackWarn: true,
+    messages: routesI18n.messages
+  }
+  return new VueI18n(i18nOptions)
 }
 
 /**
@@ -28,16 +28,16 @@ function initI18n(locale, fallback) {
  * @param valueKey
  * @returns {*}
  */
-function generateI18n(lang, routes, valueKey) {
-    routes.forEach(route => {
-        let keys = getI18nKey(route.fullPath).split('.')
-        let value = valueKey === 'path' ? route[valueKey].split('/').filter(item => !item.startsWith(':') && item != '').join('.') : route[valueKey]
-        lang.assignProps(keys, value)
-        if (route.children) {
-            generateI18n(lang, route.children, valueKey)
-        }
-    })
-    return lang
+function generateI18n (lang, routes, valueKey) {
+  routes.forEach(route => {
+    const keys = getI18nKey(route.fullPath).split('.')
+    const value = valueKey === 'path' ? route[valueKey].split('/').filter(item => !item.startsWith(':') && item != '').join('.') : route[valueKey]
+    lang.assignProps(keys, value)
+    if (route.children) {
+      generateI18n(lang, route.children, valueKey)
+    }
+  })
+  return lang
 }
 
 /**
@@ -45,14 +45,14 @@ function generateI18n(lang, routes, valueKey) {
  * @param routes
  * @param parentPath
  */
-function formatFullPath(routes, parentPath = '') {
-    routes.forEach(route => {
-        let isFullPath = route.path.substring(0, 1) === '/'
-        route.fullPath = isFullPath ? route.path : (parentPath === '/' ? parentPath + route.path : parentPath + '/' + route.path)
-        if (route.children) {
-            formatFullPath(route.children, route.fullPath)
-        }
-    })
+function formatFullPath (routes, parentPath = '') {
+  routes.forEach(route => {
+    const isFullPath = route.path.substring(0, 1) === '/'
+    route.fullPath = isFullPath ? route.path : (parentPath === '/' ? parentPath + route.path : parentPath + '/' + route.path)
+    if (route.children) {
+      formatFullPath(route.children, route.fullPath)
+    }
+  })
 }
 
 /**
@@ -60,15 +60,15 @@ function formatFullPath(routes, parentPath = '') {
  * @param i18n
  * @param routes
  */
-function mergeI18nFromRoutes(i18n, routes) {
-    formatFullPath(routes)
-    const CN = generateI18n(new Object(), routes, 'name')
-    const US = generateI18n(new Object(), routes, 'path')
-    i18n.mergeLocaleMessage('CN', CN)
-    i18n.mergeLocaleMessage('US', US)
+function mergeI18nFromRoutes (i18n, routes) {
+  formatFullPath(routes)
+  const CN = generateI18n(new Object(), routes, 'name')
+  const US = generateI18n(new Object(), routes, 'path')
+  i18n.mergeLocaleMessage('CN', CN)
+  i18n.mergeLocaleMessage('US', US)
 }
 
 export {
-    initI18n,
-    mergeI18nFromRoutes
+  initI18n,
+  mergeI18nFromRoutes
 }

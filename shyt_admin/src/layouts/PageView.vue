@@ -11,35 +11,35 @@
 
 <script>
 import PageLayout from './PageLayout'
-import PageToggleTransition from '../components/transition/PageToggleTransition';
-import {mapState} from 'vuex'
+import PageToggleTransition from '../components/transition/PageToggleTransition'
+import { mapState } from 'vuex'
 
 export default {
-    name: 'PageView',
-    components: {PageToggleTransition, PageLayout},
-    data () {
-        return {
-            page: {}
-        }
-    },
-    computed: {
-        ...mapState('setting', ['isMobile', 'multiPage', 'animate']),
-        desc() {
-            return this.page.desc
-        },
-        linkList() {
-            return this.page.linkList
-        },
-        extraImage() {
-            return this.page.extraImage
-        }
-    },
-    mounted () {
-        this.page = this.$refs.page
-    },
-    updated () {
-        this.page = this.$refs.page
+  name: 'PageView',
+  components: { PageToggleTransition, PageLayout },
+  data () {
+    return {
+      page: {}
     }
+  },
+  computed: {
+    ...mapState('setting', ['isMobile', 'multiPage', 'animate']),
+    desc () {
+      return this.page.desc
+    },
+    linkList () {
+      return this.page.linkList
+    },
+    extraImage () {
+      return this.page.extraImage
+    }
+  },
+  mounted () {
+    this.page = this.$refs.page
+  },
+  updated () {
+    this.page = this.$refs.page
+  }
 }
 </script>
 

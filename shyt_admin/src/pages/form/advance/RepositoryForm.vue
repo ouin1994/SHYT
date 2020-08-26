@@ -71,30 +71,30 @@
 
 <script>
 export default {
-    name: 'RepositoryForm',
-    props: ['showSubmit'],
-    i18n: require('./i18n-repository'),
-    data() {
-        return {
-            form: this.$form.createForm(this)
-        }
-    },
-    methods: {
-        handleSubmit (e) {
-            e.preventDefault()
-            this.form.validateFields((err, values) => {
-                if (!err) {
-                    console.log('Received values of form: ', values)
-                }
-            })
-        },
-        validate (rule, value, f) {
-            if (value !== undefined && value !== 'iczer') {
-                f('输入\'iczer\'试下？')
-            }
-            f()
-        }
+  name: 'RepositoryForm',
+  props: ['showSubmit'],
+  i18n: require('./i18n-repository'),
+  data () {
+    return {
+      form: this.$form.createForm(this)
     }
+  },
+  methods: {
+    handleSubmit (e) {
+      e.preventDefault()
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          console.log('Received values of form: ', values)
+        }
+      })
+    },
+    validate (rule, value, f) {
+      if (value !== undefined && value !== 'iczer') {
+        f('输入\'iczer\'试下？')
+      }
+      f()
+    }
+  }
 }
 </script>
 

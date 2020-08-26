@@ -10,91 +10,91 @@
 <script>
 import ACol from 'ant-design-vue/es/grid/Col'
 const Item = {
-    name: 'DetailListItem',
-    props: {
-        term: {
-            type: String,
-            required: false
-        }
-    },
-    inject: {
-        col: {
-            type: Number
-        }
-    },
-    methods: {
-        renderTerm (h, term) {
-            return term ? h(
-                'div',
-                {
-                    attrs: {
-                        class: 'term'
-                    }
-                },
-                [term]
-            ) : null
-        },
-        renderContent (h, content) {
-            return h(
-                'div',
-                {
-                    attrs: {
-                        class: 'content'
-                    }
-                },
-                [content]
-            )
-        }
-    },
-    render (h) {
-        const term = this.renderTerm(h, this.$props.term)
-        const content = this.renderContent(h, this.$slots.default)
-        return h(
-            ACol,
-            {
-                props: responsive[this.col]
-            },
-            [term, content]
-        )
+  name: 'DetailListItem',
+  props: {
+    term: {
+      type: String,
+      required: false
     }
+  },
+  inject: {
+    col: {
+      type: Number
+    }
+  },
+  methods: {
+    renderTerm (h, term) {
+      return term ? h(
+        'div',
+        {
+          attrs: {
+            class: 'term'
+          }
+        },
+        [term]
+      ) : null
+    },
+    renderContent (h, content) {
+      return h(
+        'div',
+        {
+          attrs: {
+            class: 'content'
+          }
+        },
+        [content]
+      )
+    }
+  },
+  render (h) {
+    const term = this.renderTerm(h, this.$props.term)
+    const content = this.renderContent(h, this.$slots.default)
+    return h(
+      ACol,
+      {
+        props: responsive[this.col]
+      },
+      [term, content]
+    )
+  }
 }
 
 const responsive = {
-    1: { xs: 24 },
-    2: { xs: 24, sm: 12 },
-    3: { xs: 24, sm: 12, md: 8 },
-    4: { xs: 24, sm: 12, md: 6 }
+  1: { xs: 24 },
+  2: { xs: 24, sm: 12 },
+  3: { xs: 24, sm: 12, md: 8 },
+  4: { xs: 24, sm: 12, md: 6 }
 }
 
 export default {
-    name: 'DetailList',
-    Item: Item,
-    props: {
-        title: {
-            type: String,
-            required: false
-        },
-        col: {
-            type: Number,
-            required: false,
-            default: 3
-        },
-        size: {
-            type: String,
-            required: false,
-            default: 'large'
-        },
-        layout: {
-            type: String,
-            required: false,
-            default: 'horizontal'
-        }
+  name: 'DetailList',
+  Item: Item,
+  props: {
+    title: {
+      type: String,
+      required: false
     },
-    provide () {
-        return {
-            col: this.col > 4 ? 4 : this.col
-        }
+    col: {
+      type: Number,
+      required: false,
+      default: 3
+    },
+    size: {
+      type: String,
+      required: false,
+      default: 'large'
+    },
+    layout: {
+      type: String,
+      required: false,
+      default: 'horizontal'
     }
+  },
+  provide () {
+    return {
+      col: this.col > 4 ? 4 : this.col
+    }
+  }
 }
 </script>
 

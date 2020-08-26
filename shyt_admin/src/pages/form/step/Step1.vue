@@ -46,13 +46,13 @@
 
 <script>
 export default {
-    name: 'Step1',
-    i18n: require('./i18n'),
-    methods: {
-        nextStep () {
-            this.$emit('nextStep')
-        }
+  name: 'Step1',
+  i18n: require('./i18n'),
+  methods: {
+    nextStep () {
+      this.$emit('nextStep')
     }
+  }
 }
 </script>
 
