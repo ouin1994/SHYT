@@ -15,6 +15,13 @@ module.exports = {
         {text: '指南', link: '/'},
         {text: '配置', link: '/develop/layout'},
         {text: '主题', link: '/advance/theme'},
+        {
+            text: '官方手册', 
+            items: [
+                { text: 'vue', link: 'https://cn.vuejs.org/' },
+                { text: 'antdv-admin', link: 'https://pro.antdv.com/' },
+              ]
+        },
       ],
       lastUpdated: 'Last Updated',
       sidebar: [
@@ -51,7 +58,8 @@ module.exports = {
           collapsable: false,
           children: [
             '/custom/eslint',
-            '/custom/es6'
+            '/custom/es6',
+            '/custom/code'
           ]
         },
         {
@@ -60,7 +68,8 @@ module.exports = {
           children: [
             '/train/vue',
             '/train/vuex',
-            '/train/vue_router'
+            '/train/vue_router',
+            '/train/axios'
           ]
         }
       ],
